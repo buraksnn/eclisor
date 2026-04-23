@@ -28,8 +28,9 @@ export function Navbar() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await fetch('/api/auth/me')
-        setIsLoggedIn(res.ok)
+        const res = await fetch('/api/auth/session')
+        const data = await res.json()
+        setIsLoggedIn(!!data?.user)
       } catch {
         setIsLoggedIn(false)
       }
