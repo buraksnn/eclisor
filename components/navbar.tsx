@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -17,15 +16,25 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const pathname = usePathname()
-  const { data: session } = useSession()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch('/api/auth/me')
+        setIsLoggedIn(res.ok)
+      } catch {
+        setIsLoggedIn(false)
+      }
+    }
+    checkSession()
   }, [])
 
   return (
@@ -42,7 +51,6 @@ export function Navbar() {
             ECLISOR
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -58,7 +66,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            {session ? (
+            {isLoggedIn ? (
               <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
@@ -69,7 +77,6 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2"
@@ -80,7 +87,6 @@ export function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -102,7 +108,7 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              {session ? (
+              {isLoggedIn ? (
                 <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
                   <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
                     Dashboard
