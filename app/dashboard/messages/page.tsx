@@ -3,13 +3,14 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
-import { Search, Trash2, Eye, Mail, MailOpen } from 'lucide-react'
+import { Search, Trash2, Eye, Mail, MailOpen, Send, Pencil } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type { ContactMessage } from '@/lib/db'
 
@@ -29,6 +30,13 @@ export default function MessagesPage() {
   const [page, setPage] = useState(1)
   const perPage = 10
 
+  // Mail compose state
+  const [composeOpen, setComposeOpen] = useState(false)
+  const [composeTo, setComposeTo] = useState('')
+  const [composeSubject, setComposeSubject] = useState('')
+  const [composeMessage, setComposeMessage] = useState('')
+  const [isSending, setIsSending] = useState(false)
+
   const fetchMessages = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -36,7 +44,6 @@ export default function MessagesPage() {
       if (search) params.set('search', search)
       if (subjectFilter !== 'All') params.set('subject', subjectFilter)
       if (readFilter !== 'All') params.set('read', readFilter === 'Read' ? 'true' : 'false')
-
       const res = await fetch(`/api/admin/messages?${params}`)
       const data = await res.json()
       setMessages(data)
@@ -103,6 +110,49 @@ export default function MessagesPage() {
     }
   }
 
+  const handleSendEmail = async () => {
+    if (!composeTo || !composeSubject || !composeMessage) {
+      toast.error('Please fill in all fields')
+      return
+    }
+    setIsSending(true)
+    try {
+      const res = await fetch('/api/admin/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: composeTo,
+          subject: composeSubject,
+          message: composeMessage,
+        }),
+      })
+      if (!res.ok) throw new Error()
+      toast.success('Email sent successfully!')
+      setComposeOpen(false)
+      setComposeTo('')
+      setComposeSubject('')
+      setComposeMessage('')
+    } catch {
+      toast.error('Failed to send email')
+    } finally {
+      setIsSending(false)
+    }
+  }
+
+  const openReply = (msg: ContactMessage) => {
+    setComposeTo(msg.email)
+    setComposeSubject(`Re: ${msg.subject}`)
+    setComposeMessage('')
+    setComposeOpen(true)
+  }
+
+  const openCompose = () => {
+    setComposeTo('')
+    setComposeSubject('')
+    setComposeMessage('')
+    setComposeOpen(true)
+  }
+
   const toggleSelectAll = () => {
     if (selectedIds.length === paginatedMsgs.length) {
       setSelectedIds([])
@@ -116,9 +166,15 @@ export default function MessagesPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-light">Messages</h1>
-        <p className="text-muted-foreground font-light mt-1">{messages.length} total messages</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-light">Messages</h1>
+          <p className="text-muted-foreground font-light mt-1">{messages.length} total messages</p>
+        </div>
+        <Button onClick={openCompose} className="bg-primary hover:bg-primary/90">
+          <Pencil size={16} className="mr-2" />
+          New Email
+        </Button>
       </div>
 
       {/* Filters */}
@@ -155,7 +211,6 @@ export default function MessagesPage() {
           </Select>
         </div>
 
-        {/* Bulk Actions */}
         {selectedIds.length > 0 && (
           <div className="mt-4 flex items-center gap-4 pt-4 border-t border-border/50">
             <span className="text-sm text-muted-foreground">{selectedIds.length} selected</span>
@@ -252,9 +307,7 @@ export default function MessagesPage() {
                           size="sm"
                           onClick={() => {
                             setSelectedMsg(msg)
-                            if (!msg.is_read) {
-                              handleToggleRead(msg.id, true)
-                            }
+                            if (!msg.is_read) handleToggleRead(msg.id, true)
                           }}
                         >
                           <Eye size={16} />
@@ -265,6 +318,13 @@ export default function MessagesPage() {
                           onClick={() => handleToggleRead(msg.id, !msg.is_read)}
                         >
                           {msg.is_read ? <Mail size={16} /> : <MailOpen size={16} />}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => openReply(msg)}
+                        >
+                          <Send size={16} />
                         </Button>
                         <Button
                           variant="ghost"
@@ -285,27 +345,14 @@ export default function MessagesPage() {
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between p-4 border-t border-border/50">
-            <p className="text-sm text-muted-foreground">
-              Page {page} of {totalPages}
-            </p>
+            <p className="text-sm text-muted-foreground">Page {page} of {totalPages}</p>
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-              >
+              <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage(page - 1)}>
                 Previous
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
-              >
+              <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => setPage(page + 1)}>
                 Next
               </Button>
             </div>
@@ -357,13 +404,14 @@ export default function MessagesPage() {
                   {selectedMsg.is_read ? 'Mark Unread' : 'Mark Read'}
                 </Button>
                 <Button
-                  variant="outline"
-                  className="flex-1"
-                  asChild
+                  className="flex-1 bg-primary hover:bg-primary/90"
+                  onClick={() => {
+                    openReply(selectedMsg)
+                    setSelectedMsg(null)
+                  }}
                 >
-                  <a href={`mailto:${selectedMsg.email}?subject=Re: ${selectedMsg.subject}`}>
-                    Reply
-                  </a>
+                  <Send size={16} className="mr-2" />
+                  Reply
                 </Button>
               </div>
 
@@ -383,6 +431,59 @@ export default function MessagesPage() {
         </SheetContent>
       </Sheet>
 
+      {/* Compose / Reply Dialog */}
+      <Dialog open={composeOpen} onOpenChange={setComposeOpen}>
+        <DialogContent className="glass sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="font-light">
+              {composeTo ? 'Reply' : 'New Email'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">To</p>
+              <Input
+                placeholder="email@example.com"
+                value={composeTo}
+                onChange={(e) => setComposeTo(e.target.value)}
+                className="bg-input/50"
+              />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Subject</p>
+              <Input
+                placeholder="Subject"
+                value={composeSubject}
+                onChange={(e) => setComposeSubject(e.target.value)}
+                className="bg-input/50"
+              />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Message</p>
+              <Textarea
+                placeholder="Write your message..."
+                value={composeMessage}
+                onChange={(e) => setComposeMessage(e.target.value)}
+                className="bg-input/50 min-h-[160px] resize-none"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setComposeOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              className="bg-primary hover:bg-primary/90"
+              onClick={handleSendEmail}
+              disabled={isSending}
+            >
+              <Send size={16} className="mr-2" />
+              {isSending ? 'Sending...' : 'Send'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent className="glass">
@@ -393,12 +494,8 @@ export default function MessagesPage() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={handleDelete}>
-              Delete
-            </Button>
+            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDelete}>Delete</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
