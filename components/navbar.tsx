@@ -1,11 +1,11 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useSession } from 'next-auth/react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -18,6 +18,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session } = useSession()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,9 +58,15 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
-              <Link href="/login">Login</Link>
-            </Button>
+            {session ? (
+              <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
+                <Link href="/login">Login</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,11 +102,19 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
-                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  Login
-                </Link>
-              </Button>
+              {session ? (
+                <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
+                  <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                    Dashboard
+                  </Link>
+                </Button>
+              ) : (
+                <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </motion.div>
         )}
