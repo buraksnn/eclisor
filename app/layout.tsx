@@ -12,6 +12,16 @@ export const metadata: Metadata = {
   title: 'Eclisor | Your Sound. Your Universe.',
   description: 'Premium music distribution agency. We distribute your music worldwide and connect you with the right opportunities.',
   keywords: ['music distribution', 'artist development', 'sync licensing', 'music promotion'],
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16' },
+      { url: '/favicon-32x32.png', sizes: '32x32' },
+      { url: '/android-chrome-192x192.png', sizes: '192x192' },
+      { url: '/android-chrome-512x512.png', sizes: '512x512' },
+    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+  },
 }
 
 export const viewport: Viewport = {
