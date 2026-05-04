@@ -50,14 +50,26 @@ export async function createRelease(_: UploadState, formData: FormData): Promise
   await mkdir(audioDir, { recursive: true })
   await mkdir(coverDir, { recursive: true })
 
-  const allowedAudioExts = ['.mp3', '.wav', '.flac', '.m4a', '.aac']
-  const allowedCoverExts = ['.jpg', '.jpeg', '.png', '.webp']
-  const audioExt = path.extname(audioFile.name).toLowerCase()
-  const coverExt = path.extname(coverFile.name).toLowerCase()
-  if (!allowedAudioExts.includes(audioExt)) {
+  const audioExtMap: Record<string, string> = {
+    'audio/mpeg': '.mp3',
+    'audio/wav': '.wav',
+    'audio/x-wav': '.wav',
+    'audio/flac': '.flac',
+    'audio/aac': '.aac',
+    'audio/mp4': '.m4a',
+    'audio/x-m4a': '.m4a',
+  }
+  const coverExtMap: Record<string, string> = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/webp': '.webp',
+  }
+  const audioExt = audioExtMap[audioFile.type]
+  const coverExt = coverExtMap[coverFile.type]
+  if (!audioExt) {
     return { error: 'Audio file must be MP3, WAV, FLAC, M4A, or AAC.' }
   }
-  if (!allowedCoverExts.includes(coverExt)) {
+  if (!coverExt) {
     return { error: 'Cover art must be JPG, PNG, or WebP.' }
   }
   const audioName = `${crypto.randomUUID()}${audioExt}`

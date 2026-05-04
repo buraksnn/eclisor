@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import { createRelease, type UploadState } from './actions'
 import { Button } from '@/components/ui/button'
@@ -33,6 +33,14 @@ export default function UploadPage() {
     () => Object.values(metadata).every((value) => value.trim().length > 0),
     [metadata],
   )
+
+  useEffect(() => {
+    return () => {
+      if (coverPreview) {
+        URL.revokeObjectURL(coverPreview)
+      }
+    }
+  }, [coverPreview])
 
   const fileComplete = useMemo(() => audioName.length > 0 && coverPreview.length > 0, [audioName, coverPreview])
 

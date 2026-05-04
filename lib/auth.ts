@@ -95,8 +95,8 @@ export async function requireAuth(): Promise<User> {
   return user
 }
 
-export function isAdmin(user: User | null): user is User {
-  return !!user && user.role?.toLowerCase() === 'admin'
+export function isAdmin(user: User | null): user is User & { role: 'admin' } {
+  return !!user && user.role === 'admin'
 }
 
 export async function requireAdmin(): Promise<User> {

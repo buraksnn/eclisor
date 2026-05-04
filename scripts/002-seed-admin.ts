@@ -2,7 +2,7 @@ import { neon } from '@neondatabase/serverless'
 import bcrypt from 'bcryptjs'
 
 const sql = neon(process.env.DATABASE_URL!)
-const ADMIN_ROLE: 'admin' = 'admin'
+const ADMIN_ROLE = 'admin'
 
 async function seed() {
   console.log('Seeding admin user...')

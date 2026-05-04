@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { revalidatePath } from 'next/cache'
 import { sql, type Release } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth'
@@ -65,9 +66,11 @@ export default async function PendingReleasesPage() {
           {releases.map((release) => (
             <div key={release.id} className="glass-card rounded-2xl p-6 border border-border/80">
               <div className="grid gap-6 lg:grid-cols-[auto_1fr_auto]">
-                <img
+                <Image
                   src={release.cover_url}
                   alt={`${release.title} cover`}
+                  width={128}
+                  height={128}
                   className="h-32 w-32 object-cover border border-border/80"
                 />
                 <div className="space-y-3">
@@ -87,7 +90,11 @@ export default async function PendingReleasesPage() {
                       Contact: <span className="text-foreground">{release.user_email}</span>
                     </p>
                   </div>
-                  <audio controls className="w-full">
+                  <audio
+                    controls
+                    className="w-full"
+                    aria-label={`Audio preview for ${release.title} by ${release.artist_name}`}
+                  >
                     <source src={release.audio_url} />
                     Your browser does not support the audio element.
                   </audio>
