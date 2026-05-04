@@ -7,7 +7,7 @@ export type User = {
   name: string
   email: string
   password: string
-  role: string
+  role: 'user' | 'admin'
   created_at: Date
   updated_at: Date
 }
@@ -62,5 +62,20 @@ export type SiteSettings = {
   artist_count: number
   country_count: number
   stream_count: string
+  updated_at: Date
+}
+
+export type Release = {
+  id: number
+  user_id: number
+  title: string
+  artist_name: string
+  genre: string
+  isrc: string
+  release_date: string
+  audio_url: string
+  cover_url: string
+  status: 'pending' | 'approved' | 'rejected'
+  created_at: Date
   updated_at: Date
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { sql } from '@/lib/db'
-import { getSession } from '@/lib/auth'
+import { getSession, isAdmin } from '@/lib/auth'
 
 export async function PATCH(
   request: Request,
@@ -9,6 +9,9 @@ export async function PATCH(
   const user = await getSession()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const { id } = await params
@@ -31,6 +34,9 @@ export async function DELETE(
   const user = await getSession()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const { id } = await params

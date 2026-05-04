@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
-import { requireAuth } from '@/lib/auth'
+import { getSession, isAdmin } from '@/lib/auth'
 import { sendEmail } from '@/lib/mail'
 
 export async function POST(request: Request) {
   try {
-    await requireAuth()
+    const user = await getSession()
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if (!isAdmin(user)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
     const { to, subject, message } = await request.json()
 
     if (!to || !subject || !message) {

@@ -12,7 +12,7 @@ async function setupDatabase() {
       name VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
-      role VARCHAR(50) DEFAULT 'ADMIN',
+      role VARCHAR(50) DEFAULT 'user',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
@@ -71,6 +71,25 @@ async function setupDatabase() {
     )
   `
   console.log('Created artist_catalog table')
+
+  // Create releases table
+  await sql`
+    CREATE TABLE IF NOT EXISTS releases (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      title VARCHAR(255) NOT NULL,
+      artist_name VARCHAR(255) NOT NULL,
+      genre VARCHAR(100) NOT NULL,
+      isrc VARCHAR(50) NOT NULL,
+      release_date DATE NOT NULL,
+      audio_url VARCHAR(500) NOT NULL,
+      cover_url VARCHAR(500) NOT NULL,
+      status VARCHAR(50) DEFAULT 'pending',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `
+  console.log('Created releases table')
 
   // Create site_settings table
   await sql`

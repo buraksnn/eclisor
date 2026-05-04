@@ -47,8 +47,8 @@ export default async function DashboardOverview() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-light">Overview</h1>
-        <p className="text-muted-foreground font-light mt-1">Welcome to your dashboard</p>
+        <h1 className="text-2xl font-semibold">Overview</h1>
+        <p className="text-muted-foreground font-medium mt-1">Welcome to your dashboard</p>
       </div>
 
       {/* Stats Grid */}

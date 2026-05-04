@@ -3,13 +3,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, FileText, Mail, Music, Settings, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, FileText, Mail, Music, Settings, LogOut, Menu, X, Upload, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import toast from 'react-hot-toast'
 import type { User } from '@/lib/db'
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
+  { href: '/dashboard/upload', icon: Upload, label: 'Upload' },
   { href: '/dashboard/applications', icon: FileText, label: 'Applications' },
   { href: '/dashboard/messages', icon: Mail, label: 'Messages' },
   { href: '/dashboard/catalog', icon: Music, label: 'Catalog' },
@@ -83,6 +84,20 @@ export function DashboardSidebar({ user }: { user: User }) {
                 </Link>
               )
             })}
+            {user.role?.toLowerCase() === 'admin' && (
+              <Link
+                href="/admin/pending-releases"
+                onClick={() => setIsMobileOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  pathname === '/admin/pending-releases'
+                    ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                    : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
+                }`}
+              >
+                <ShieldCheck size={20} strokeWidth={1.5} />
+                <span className="font-light">Pending Releases</span>
+              </Link>
+            )}
           </nav>
 
           {/* User Info & Logout */}

@@ -16,7 +16,7 @@ async function seed() {
   // Insert admin user
   await sql`
     INSERT INTO users (name, email, password, role)
-    VALUES ('Admin', 'admin@eclisor.com', ${hashedPassword}, 'ADMIN')
+    VALUES ('Admin', 'admin@eclisor.com', ${hashedPassword}, 'admin')
   `
 
   console.log('Admin user created: admin@eclisor.com / admin123')
