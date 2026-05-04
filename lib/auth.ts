@@ -12,7 +12,8 @@ function normalizeRole(role?: string): User['role'] {
   if (normalized === 'admin' || normalized === 'user') {
     return normalized
   }
-  throw new Error(`Invalid role value: ${role}`)
+  console.warn(`Invalid role value detected: ${role}`)
+  return 'user'
 }
 
 export async function hashPassword(password: string): Promise<string> {

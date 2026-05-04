@@ -157,9 +157,13 @@ export default function UploadPage() {
                   type="file"
                   accept="image/*"
                   required
-                  onChange={(event) =>
-                    setCoverPreview(event.target.files?.[0] ? URL.createObjectURL(event.target.files[0]) : '')
-                  }
+                  onChange={(event) => {
+                    const file = event.target.files?.[0]
+                    if (coverPreview) {
+                      URL.revokeObjectURL(coverPreview)
+                    }
+                    setCoverPreview(file ? URL.createObjectURL(file) : '')
+                  }}
                 />
                 {coverPreview ? (
                   <img src={coverPreview} alt="Cover preview" className="mt-4 h-40 w-40 object-cover border" />

@@ -19,7 +19,7 @@ async function approveRelease(formData: FormData) {
   'use server'
   await requireAdmin()
   const id = Number(formData.get('id'))
-  if (!Number.isFinite(id)) {
+  if (!Number.isFinite(id) || id <= 0) {
     throw new Error('Invalid release id')
   }
   await sql`
@@ -34,7 +34,7 @@ async function rejectRelease(formData: FormData) {
   'use server'
   await requireAdmin()
   const id = Number(formData.get('id'))
-  if (!Number.isFinite(id)) {
+  if (!Number.isFinite(id) || id <= 0) {
     throw new Error('Invalid release id')
   }
   await sql`
