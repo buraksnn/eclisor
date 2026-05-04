@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless'
+import type { UserRole } from './roles'
 
 export const sql = neon(process.env.DATABASE_URL!)
 
@@ -7,7 +8,7 @@ export type User = {
   name: string
   email: string
   password: string
-  role: 'user' | 'admin'
+  role: UserRole
   created_at: Date
   updated_at: Date
 }

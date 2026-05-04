@@ -1,19 +1,20 @@
 import { cookies } from 'next/headers'
 import { sql, User } from './db'
+import { ADMIN_ROLE, USER_ROLE, isAdminRole, type UserRole } from './roles'
 import bcrypt from 'bcryptjs'
 
 const SESSION_COOKIE_NAME = 'eclisor_session'
 
-function normalizeRole(role?: string): User['role'] {
+function normalizeRole(role?: string): UserRole {
   if (!role) {
-    return 'user'
+    return USER_ROLE
   }
-  const normalized = role.toLowerCase()
-  if (normalized === 'admin' || normalized === 'user') {
+  const normalized = role.toLowerCase() as UserRole
+  if (normalized === ADMIN_ROLE || normalized === USER_ROLE) {
     return normalized
   }
   console.warn(`Invalid role value detected: ${role}`)
-  return 'user'
+  return USER_ROLE
 }
 
 export async function hashPassword(password: string): Promise<string> {
@@ -97,7 +98,7 @@ export async function requireAuth(): Promise<User> {
 }
 
 export function isAdmin(user: User | null): user is User & { role: 'admin' } {
-  return !!user && user.role === 'admin'
+  return !!user && isAdminRole(user.role)
 }
 
 export async function requireAdmin(): Promise<User> {

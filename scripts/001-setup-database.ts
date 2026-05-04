@@ -84,7 +84,7 @@ async function setupDatabase() {
       release_date DATE NOT NULL,
       audio_url VARCHAR(500) NOT NULL,
       cover_url VARCHAR(500) NOT NULL,
-      status VARCHAR(50) DEFAULT 'pending',
+      status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )

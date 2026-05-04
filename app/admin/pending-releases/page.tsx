@@ -20,7 +20,7 @@ async function approveRelease(formData: FormData) {
   await requireAdmin()
   const id = Number(formData.get('id'))
   if (!Number.isFinite(id) || id <= 0) {
-    throw new Error('Invalid release id')
+    throw new Error('Release ID must be a positive number')
   }
   await sql`
     UPDATE releases
@@ -35,7 +35,7 @@ async function rejectRelease(formData: FormData) {
   await requireAdmin()
   const id = Number(formData.get('id'))
   if (!Number.isFinite(id) || id <= 0) {
-    throw new Error('Invalid release id')
+    throw new Error('Release ID must be a positive number')
   }
   await sql`
     UPDATE releases

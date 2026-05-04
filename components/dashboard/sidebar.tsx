@@ -7,6 +7,7 @@ import { LayoutDashboard, FileText, Mail, Music, Settings, LogOut, Menu, X, Uplo
 import { Button } from '@/components/ui/button'
 import toast from 'react-hot-toast'
 import type { User } from '@/lib/db'
+import { isAdminRole } from '@/lib/roles'
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
@@ -84,7 +85,7 @@ export function DashboardSidebar({ user }: { user: User }) {
                 </Link>
               )
             })}
-            {user.role?.toLowerCase() === 'admin' && (
+            {isAdminRole(user.role) && (
               <Link
                 href="/admin/pending-releases"
                 onClick={() => setIsMobileOpen(false)}

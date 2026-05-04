@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { sql } from '@/lib/db'
 import { createSession, hashPassword } from '@/lib/auth'
+import { USER_ROLE } from '@/lib/roles'
 
 export type RegisterState = {
   error?: string
@@ -25,7 +26,7 @@ export async function registerUser(_: RegisterState, formData: FormData): Promis
   const hashedPassword = await hashPassword(password)
   const result = await sql`
     INSERT INTO users (name, email, password, role)
-    VALUES (${name}, ${email}, ${hashedPassword}, 'user')
+    VALUES (${name}, ${email}, ${hashedPassword}, ${USER_ROLE})
     RETURNING id
   `
 
