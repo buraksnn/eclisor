@@ -5,7 +5,14 @@ import bcrypt from 'bcryptjs'
 const SESSION_COOKIE_NAME = 'eclisor_session'
 
 function normalizeRole(role?: string): User['role'] {
-  return role?.toLowerCase() === 'admin' ? 'admin' : 'user'
+  if (!role) {
+    return 'user'
+  }
+  const normalized = role.toLowerCase()
+  if (normalized === 'admin' || normalized === 'user') {
+    return normalized
+  }
+  throw new Error(`Invalid role value: ${role}`)
 }
 
 export async function hashPassword(password: string): Promise<string> {

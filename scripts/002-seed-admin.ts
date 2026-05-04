@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless'
 import bcrypt from 'bcryptjs'
 
 const sql = neon(process.env.DATABASE_URL!)
+const ADMIN_ROLE: 'admin' = 'admin'
 
 async function seed() {
   console.log('Seeding admin user...')
@@ -16,7 +17,7 @@ async function seed() {
   // Insert admin user
   await sql`
     INSERT INTO users (name, email, password, role)
-    VALUES ('Admin', 'admin@eclisor.com', ${hashedPassword}, 'admin')
+    VALUES ('Admin', 'admin@eclisor.com', ${hashedPassword}, ${ADMIN_ROLE})
   `
 
   console.log('Admin user created: admin@eclisor.com / admin123')

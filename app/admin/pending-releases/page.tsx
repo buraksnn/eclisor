@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import { sql, type Release } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
@@ -17,24 +18,30 @@ async function approveRelease(formData: FormData) {
   'use server'
   await requireAdmin()
   const id = Number(formData.get('id'))
-  if (!Number.isFinite(id)) return
+  if (!Number.isFinite(id)) {
+    throw new Error('Invalid release id')
+  }
   await sql`
     UPDATE releases
     SET status = 'approved', updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
   `
+  revalidatePath('/admin/pending-releases')
 }
 
 async function rejectRelease(formData: FormData) {
   'use server'
   await requireAdmin()
   const id = Number(formData.get('id'))
-  if (!Number.isFinite(id)) return
+  if (!Number.isFinite(id)) {
+    throw new Error('Invalid release id')
+  }
   await sql`
     UPDATE releases
     SET status = 'rejected', updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
   `
+  revalidatePath('/admin/pending-releases')
 }
 
 export default async function PendingReleasesPage() {

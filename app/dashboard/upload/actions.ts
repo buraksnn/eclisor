@@ -35,6 +35,14 @@ export async function createRelease(_: UploadState, formData: FormData): Promise
   if (!coverFile.type.startsWith('image/')) {
     return { error: 'Cover art must be an image file.' }
   }
+  const maxAudioSize = 50 * 1024 * 1024
+  const maxCoverSize = 10 * 1024 * 1024
+  if (audioFile.size > maxAudioSize) {
+    return { error: 'Audio file must be smaller than 50MB.' }
+  }
+  if (coverFile.size > maxCoverSize) {
+    return { error: 'Cover art must be smaller than 10MB.' }
+  }
 
   const uploadRoot = path.join(process.cwd(), 'public', 'uploads')
   const audioDir = path.join(uploadRoot, 'audio')
@@ -42,8 +50,16 @@ export async function createRelease(_: UploadState, formData: FormData): Promise
   await mkdir(audioDir, { recursive: true })
   await mkdir(coverDir, { recursive: true })
 
-  const audioExt = path.extname(audioFile.name) || '.mp3'
-  const coverExt = path.extname(coverFile.name) || '.jpg'
+  const allowedAudioExts = ['.mp3', '.wav', '.flac', '.m4a', '.aac']
+  const allowedCoverExts = ['.jpg', '.jpeg', '.png', '.webp']
+  const audioExt = path.extname(audioFile.name).toLowerCase()
+  const coverExt = path.extname(coverFile.name).toLowerCase()
+  if (!allowedAudioExts.includes(audioExt)) {
+    return { error: 'Audio file must be MP3, WAV, FLAC, M4A, or AAC.' }
+  }
+  if (!allowedCoverExts.includes(coverExt)) {
+    return { error: 'Cover art must be JPG, PNG, or WebP.' }
+  }
   const audioName = `${crypto.randomUUID()}${audioExt}`
   const coverName = `${crypto.randomUUID()}${coverExt}`
 

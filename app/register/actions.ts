@@ -30,5 +30,5 @@ export async function registerUser(_: RegisterState, formData: FormData): Promis
   `
 
   await createSession(result[0].id as number)
-  redirect('/dashboard/upload')
+  redirect('/dashboard')
 }
