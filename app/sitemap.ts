@@ -7,12 +7,6 @@ export default function sitemap() {
       priority: 1,
     },
     {
-      url: 'https://eclisor.com/apply',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
       url: 'https://eclisor.com/contact',
       lastModified: new Date(),
       changeFrequency: 'monthly',

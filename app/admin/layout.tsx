@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getSession, isAdmin } from '@/lib/auth'
-import { DashboardSidebar } from '@/components/dashboard/sidebar'
+import { AdminSidebar } from '@/components/admin/sidebar'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getSession()
@@ -10,13 +10,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   if (!isAdmin(user)) {
-    redirect('/dashboard')
+    notFound()
   }
 
   return (
-    <div className="flex min-h-screen">
-      <DashboardSidebar user={user} />
-      <main className="flex-1 lg:ml-64 p-6 lg:p-8">
+    <div className="flex min-h-screen bg-background text-foreground">
+      <AdminSidebar user={user} />
+      <main className="flex-1 lg:ml-72 px-6 py-10 lg:px-12 lg:py-12">
         {children}
       </main>
     </div>

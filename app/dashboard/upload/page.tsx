@@ -49,9 +49,9 @@ export default function UploadPage() {
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Release Upload</p>
         <h1 className="mt-4 text-3xl md:text-5xl font-semibold">Submit your next release</h1>
-        <p className="mt-3 text-muted-foreground">
-          Complete the steps below and send your track to the admin team for approval.
-        </p>
+          <p className="mt-3 text-muted-foreground">
+            Complete the steps below and send your track for review.
+          </p>
       </div>
 
       <div className="flex flex-wrap gap-4">
@@ -215,7 +215,7 @@ export default function UploadPage() {
           {state?.error ? <p className="text-sm text-destructive mt-4">{state.error}</p> : null}
           {state?.success ? (
             <p className="text-sm text-foreground mt-4">
-              Release submitted. You can track approval in the admin queue.
+              Release submitted. We will review it shortly.
             </p>
           ) : null}
           <div className="mt-6 flex justify-between gap-3">

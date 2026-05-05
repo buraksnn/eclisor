@@ -1,144 +1,114 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { sql, ApplicationRequest, ContactMessage } from '@/lib/db'
-import { StatsCard } from '@/components/dashboard/stats-card'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { sql, type Release } from '@/lib/db'
 import { Button } from '@/components/ui/button'
-import { FileText, Clock, CheckCircle, Mail } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 
-async function getStats() {
-  const [totalApps, pendingApps, acceptedApps, unreadMsgs] = await Promise.all([
-    sql`SELECT COUNT(*) as count FROM application_requests`,
-    sql`SELECT COUNT(*) as count FROM application_requests WHERE status = 'PENDING'`,
-    sql`SELECT COUNT(*) as count FROM application_requests WHERE status = 'ACCEPTED'`,
-    sql`SELECT COUNT(*) as count FROM contact_messages WHERE is_read = false`,
-  ])
+const statusStyles: Record<Release['status'], string> = {
+  pending: 'bg-amber-100 text-amber-900',
+  approved: 'bg-emerald-100 text-emerald-900',
+  rejected: 'bg-rose-100 text-rose-900',
+}
 
-  return {
-    totalApplications: Number(totalApps[0]?.count || 0),
-    pendingApplications: Number(pendingApps[0]?.count || 0),
-    acceptedArtists: Number(acceptedApps[0]?.count || 0),
-    unreadMessages: Number(unreadMsgs[0]?.count || 0),
+const statusLabels: Record<Release['status'], string> = {
+  pending: 'Beklemede',
+  approved: 'Onaylandı',
+  rejected: 'Reddedildi',
+}
+
+export default async function DashboardPage() {
+  const user = await getSession()
+
+  if (!user) {
+    redirect('/login')
   }
-}
 
-async function getRecentData() {
-  const [recentApps, recentMsgs] = await Promise.all([
-    sql`SELECT * FROM application_requests ORDER BY created_at DESC LIMIT 5`,
-    sql`SELECT * FROM contact_messages ORDER BY created_at DESC LIMIT 5`,
-  ])
+  const releases = await sql`
+    SELECT *
+    FROM releases
+    WHERE user_id = ${user.id}
+    ORDER BY created_at DESC
+  `
 
-  return {
-    recentApplications: recentApps as ApplicationRequest[],
-    recentMessages: recentMsgs as ContactMessage[],
-  }
-}
-
-const statusColors: Record<string, string> = {
-  PENDING: 'bg-yellow-500/20 text-yellow-400',
-  REVIEWED: 'bg-blue-500/20 text-blue-400',
-  ACCEPTED: 'bg-green-500/20 text-green-400',
-  REJECTED: 'bg-red-500/20 text-red-400',
-}
-
-export default async function DashboardOverview() {
-  const stats = await getStats()
-  const { recentApplications, recentMessages } = await getRecentData()
+  const items = releases as Release[]
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold">Overview</h1>
-        <p className="text-muted-foreground font-medium mt-1">Welcome to your dashboard</p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatsCard
-          title="Total Applications"
-          value={stats.totalApplications}
-          icon={FileText}
-        />
-        <StatsCard
-          title="Pending Applications"
-          value={stats.pendingApplications}
-          icon={Clock}
-        />
-        <StatsCard
-          title="Accepted Artists"
-          value={stats.acceptedArtists}
-          icon={CheckCircle}
-        />
-        <StatsCard
-          title="Unread Messages"
-          value={stats.unreadMessages}
-          icon={Mail}
-        />
-      </div>
-
-      {/* Recent Data */}
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Recent Applications */}
-        <div className="glass-card rounded-xl p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-light">Recent Applications</h2>
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/dashboard/applications">View All</Link>
-            </Button>
-          </div>
-
-          {recentApplications.length === 0 ? (
-            <p className="text-muted-foreground text-sm text-center py-8">No applications yet</p>
-          ) : (
-            <div className="space-y-4">
-              {recentApplications.map((app) => (
-                <div
-                  key={app.id}
-                  className="flex items-center justify-between py-3 border-b border-border/50 last:border-0"
-                >
-                  <div>
-                    <p className="font-light">{app.artist_name}</p>
-                    <p className="text-xs text-muted-foreground">{app.email}</p>
-                  </div>
-                  <Badge className={statusColors[app.status]}>
-                    {app.status}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
+    <div className="space-y-10">
+      <div className="flex flex-wrap items-center justify-between gap-6">
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">Sanatçı Paneli</p>
+          <h1 className="mt-3 text-3xl md:text-5xl font-semibold">Yayınlarım</h1>
+          <p className="mt-3 text-muted-foreground max-w-2xl">
+            Tüm yayın başvurularını buradan takip edebilir, yeni bir çalışma gönderebilirsiniz.
+          </p>
         </div>
-
-        {/* Recent Messages */}
-        <div className="glass-card rounded-xl p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-light">Recent Messages</h2>
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/dashboard/messages">View All</Link>
-            </Button>
-          </div>
-
-          {recentMessages.length === 0 ? (
-            <p className="text-muted-foreground text-sm text-center py-8">No messages yet</p>
-          ) : (
-            <div className="space-y-4">
-              {recentMessages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className="flex items-center justify-between py-3 border-b border-border/50 last:border-0"
-                >
-                  <div>
-                    <p className="font-light">{msg.full_name}</p>
-                    <p className="text-xs text-muted-foreground">{msg.subject}</p>
-                  </div>
-                  <Badge className={msg.is_read ? 'bg-muted text-muted-foreground' : 'bg-primary/20 text-primary'}>
-                    {msg.is_read ? 'Read' : 'Unread'}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <Button asChild size="lg" className="px-6">
+          <Link href="/dashboard/upload">Yeni Şarkı Yükle</Link>
+        </Button>
       </div>
+
+      {items.length === 0 ? (
+        <Card className="border-border/80">
+          <CardContent className="py-12 text-center space-y-3">
+            <p className="text-lg font-semibold">Henüz yükleme yapılmadı</p>
+            <p className="text-muted-foreground">
+              İlk yayınını oluşturmak için “Yeni Şarkı Yükle” adımına geçebilirsin.
+            </p>
+            <Button asChild size="lg" className="mt-4">
+              <Link href="/dashboard/upload">Yeni Şarkı Yükle</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid gap-6">
+          {items.map((release) => (
+            <Card key={release.id} className="overflow-hidden border-border/80">
+              <div className="grid gap-6 md:grid-cols-[180px_1fr]">
+                <div className="relative h-44 w-full md:h-full md:min-h-[180px]">
+                  <Image
+                    src={release.cover_url}
+                    alt={`${release.title} cover`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <CardContent className="py-8">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <h2 className="text-2xl font-semibold">{release.title}</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">{release.artist_name}</p>
+                    </div>
+                    <Badge className={statusStyles[release.status]}>
+                      {statusLabels[release.status]}
+                    </Badge>
+                  </div>
+                  <div className="mt-6 grid gap-2 text-sm text-muted-foreground md:grid-cols-3">
+                    <p>
+                      Tür: <span className="text-foreground font-semibold">{release.genre}</span>
+                    </p>
+                    <p>
+                      ISRC: <span className="text-foreground font-semibold">{release.isrc}</span>
+                    </p>
+                    <p>
+                      Yayın Tarihi:{' '}
+                      <span className="text-foreground font-semibold">{release.release_date}</span>
+                    </p>
+                  </div>
+                  <div className="mt-6">
+                    <audio controls className="w-full">
+                      <source src={release.audio_url} />
+                      Tarayıcınız bu ses dosyasını desteklemiyor.
+                    </audio>
+                  </div>
+                </CardContent>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

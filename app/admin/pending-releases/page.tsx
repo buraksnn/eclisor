@@ -50,21 +50,21 @@ export default async function PendingReleasesPage() {
   const releases = await getPendingReleases()
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Admin Queue</p>
-        <h1 className="mt-4 text-3xl md:text-5xl font-semibold">Pending releases</h1>
-        <p className="mt-2 text-muted-foreground">Review submissions and approve or reject them.</p>
+        <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">Yönetim</p>
+        <h1 className="mt-3 text-3xl md:text-5xl font-semibold">Bekleyen Onaylar</h1>
+        <p className="mt-3 text-muted-foreground">Gönderilen çalışmaları inceleyip onaylayın.</p>
       </div>
 
       {releases.length === 0 ? (
-        <div className="glass-card rounded-2xl p-10 text-center border border-border/80">
-          <p className="text-muted-foreground">No pending releases right now.</p>
+        <div className="bg-card border border-border/80 rounded-2xl p-10 text-center">
+          <p className="text-muted-foreground">Şu anda bekleyen yayın bulunmuyor.</p>
         </div>
       ) : (
         <div className="grid gap-6">
           {releases.map((release) => (
-            <div key={release.id} className="glass-card rounded-2xl p-6 border border-border/80">
+            <div key={release.id} className="bg-card border border-border/80 rounded-2xl p-6">
               <div className="grid gap-6 lg:grid-cols-[auto_1fr_auto]">
                 <Image
                   src={release.cover_url}
@@ -75,19 +75,19 @@ export default async function PendingReleasesPage() {
                 />
                 <div className="space-y-3">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Release</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Yayın</p>
                     <h3 className="text-2xl font-semibold">{release.title}</h3>
                     <p className="text-sm text-muted-foreground">{release.artist_name}</p>
                   </div>
                   <div className="grid gap-2 text-sm text-muted-foreground md:grid-cols-2">
-                    <p>Genre: <span className="text-foreground">{release.genre}</span></p>
-                    <p>ISRC: <span className="text-foreground">{release.isrc}</span></p>
-                    <p>Release Date: <span className="text-foreground">{release.release_date}</span></p>
+                    <p>Tür: <span className="text-foreground font-semibold">{release.genre}</span></p>
+                    <p>ISRC: <span className="text-foreground font-semibold">{release.isrc}</span></p>
+                    <p>Yayın Tarihi: <span className="text-foreground font-semibold">{release.release_date}</span></p>
                     <p>
-                      Submitted by: <span className="text-foreground">{release.user_name}</span>
+                      Gönderen: <span className="text-foreground font-semibold">{release.user_name}</span>
                     </p>
                     <p>
-                      Contact: <span className="text-foreground">{release.user_email}</span>
+                      İletişim: <span className="text-foreground font-semibold">{release.user_email}</span>
                     </p>
                   </div>
                   <audio
@@ -103,13 +103,13 @@ export default async function PendingReleasesPage() {
                   <form action={approveRelease}>
                     <input type="hidden" name="id" value={release.id} />
                     <Button type="submit" size="lg" className="w-full">
-                      Approve
+                      Onayla
                     </Button>
                   </form>
                   <form action={rejectRelease}>
                     <input type="hidden" name="id" value={release.id} />
                     <Button type="submit" size="lg" variant="outline" className="w-full">
-                      Reject
+                      Reddet
                     </Button>
                   </form>
                 </div>

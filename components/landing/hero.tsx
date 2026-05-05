@@ -103,8 +103,8 @@ export function Hero() {
             size="lg"
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-base rounded-full group"
           >
-            <Link href="/apply">
-              Apply Now
+            <Link href="/register">
+              Get Started
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
