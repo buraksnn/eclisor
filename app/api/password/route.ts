@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server'
 import { sql } from '@/lib/db'
-import { getSession, hashPassword, isAdmin, verifyPassword } from '@/lib/auth'
+import { getSession, hashPassword, verifyPassword } from '@/lib/auth'
 
 export async function PATCH(request: Request) {
   const user = await getSession()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const body = await request.json()
@@ -18,13 +15,11 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  // Verify current password
   const isValid = await verifyPassword(currentPassword, user.password)
   if (!isValid) {
     return NextResponse.json({ error: 'Current password is incorrect' }, { status: 400 })
   }
 
-  // Hash new password
   const hashedPassword = await hashPassword(newPassword)
 
   await sql`

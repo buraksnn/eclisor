@@ -105,11 +105,17 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <div className="text-center text-sm text-muted-foreground mt-6 space-y-2">
+          <p>
+            New to Eclisor?{' '}
+            <Link href="/register" className="text-foreground underline underline-offset-4">
+              Create an account
+            </Link>
+          </p>
           <Link href="/" className="hover:text-foreground transition-colors">
             &larr; Back to home
           </Link>
-        </p>
+        </div>
       </motion.div>
     </main>
   )

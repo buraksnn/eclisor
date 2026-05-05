@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server'
 import { sql, ContactMessage } from '@/lib/db'
-import { getSession } from '@/lib/auth'
+import { getSession, isAdmin } from '@/lib/auth'
 
 export async function GET(request: Request) {
   const user = await getSession()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const { searchParams } = new URL(request.url)

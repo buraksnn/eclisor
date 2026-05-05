@@ -9,11 +9,11 @@ type StatsCardProps = {
 
 export function StatsCard({ title, value, icon: Icon, trend }: StatsCardProps) {
   return (
-    <div className="glass-card rounded-xl p-6">
+    <div className="glass-card rounded-xl p-6 border border-border/80">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-muted-foreground font-light">{title}</p>
-          <p className="text-3xl font-light mt-2">{value}</p>
+          <p className="text-sm text-muted-foreground font-semibold">{title}</p>
+          <p className="text-3xl font-semibold mt-2">{value}</p>
           {trend && (
             <p className="text-xs text-primary mt-2">{trend}</p>
           )}

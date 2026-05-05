@@ -124,33 +124,34 @@ export default function CatalogPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-10">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-light">Artist Catalog</h1>
-          <p className="text-muted-foreground font-light mt-1">{artists.length} artists in catalog</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">Yönetim</p>
+          <h1 className="mt-3 text-3xl md:text-5xl font-semibold">Sanatçı Listesi</h1>
+          <p className="text-muted-foreground mt-2">{artists.length} sanatçı kayıtlı</p>
         </div>
-        <Button onClick={() => openEditDialog()} className="gap-2 bg-primary hover:bg-primary/90">
+        <Button onClick={() => openEditDialog()} className="gap-2">
           <Plus size={16} />
-          Add Artist
+          Sanatçı Ekle
         </Button>
       </div>
 
       {/* Filters */}
-      <div className="glass-card rounded-xl p-4">
+      <div className="bg-card border border-border/80 rounded-2xl p-6">
         <div className="flex flex-wrap gap-4">
           <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search artists..."
+              placeholder="Sanatçı ara..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-input/50"
+              className="pl-10"
             />
           </div>
           <Select value={genreFilter} onValueChange={setGenreFilter}>
-            <SelectTrigger className="w-[150px] bg-input/50">
-              <SelectValue placeholder="Genre" />
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Tür" />
             </SelectTrigger>
             <SelectContent>
               {genres.map((g) => (
@@ -159,8 +160,8 @@ export default function CatalogPage() {
             </SelectContent>
           </Select>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[150px] bg-input/50">
-              <SelectValue placeholder="Status" />
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Durum" />
             </SelectTrigger>
             <SelectContent>
               {statuses.map((s) => (
@@ -175,7 +176,7 @@ export default function CatalogPage() {
       {isLoading ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="glass-card rounded-xl p-6">
+            <div key={i} className="bg-card border border-border/80 rounded-2xl p-6">
               <Skeleton className="h-40 w-full rounded-lg mb-4" />
               <Skeleton className="h-6 w-3/4 mb-2" />
               <Skeleton className="h-4 w-1/2" />
@@ -183,22 +184,22 @@ export default function CatalogPage() {
           ))}
         </div>
       ) : artists.length === 0 ? (
-        <div className="glass-card rounded-xl p-12 text-center">
+        <div className="bg-card border border-border/80 rounded-2xl p-12 text-center">
           <Music className="h-12 w-12 text-muted-foreground mx-auto mb-4" strokeWidth={1} />
-          <p className="text-muted-foreground">No artists in catalog</p>
+          <p className="text-muted-foreground">Katalogda sanatçı yok</p>
           <Button
             onClick={() => openEditDialog()}
             className="mt-4 gap-2"
             variant="outline"
           >
             <Plus size={16} />
-            Add Your First Artist
+            İlk Sanatçıyı Ekle
           </Button>
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {artists.map((artist) => (
-            <div key={artist.id} className="glass-card rounded-xl overflow-hidden group">
+            <div key={artist.id} className="bg-card border border-border/80 rounded-2xl overflow-hidden group">
               {artist.image_url ? (
                 <div
                   className="h-40 bg-cover bg-center"
@@ -211,7 +212,7 @@ export default function CatalogPage() {
               )}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-light">{artist.artist_name}</h3>
+                  <h3 className="text-lg font-semibold">{artist.artist_name}</h3>
                   <Badge className={artist.status === 'ACTIVE' ? 'bg-green-500/20 text-green-400' : 'bg-muted text-muted-foreground'}>
                     {artist.status}
                   </Badge>
@@ -250,34 +251,33 @@ export default function CatalogPage() {
 
       {/* Edit/Add Dialog */}
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="glass max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-light">
-              {editArtist.id ? 'Edit Artist' : 'Add New Artist'}
+            <DialogTitle className="font-semibold">
+              {editArtist.id ? 'Sanatçı Düzenle' : 'Yeni Sanatçı'}
             </DialogTitle>
           </DialogHeader>
 
           <FieldGroup className="mt-4">
             <Field>
-              <FieldLabel>Artist Name *</FieldLabel>
+              <FieldLabel>Sanatçı Adı *</FieldLabel>
               <Input
                 value={editArtist.artist_name || ''}
                 onChange={(e) => setEditArtist({ ...editArtist, artist_name: e.target.value })}
-                placeholder="Artist name"
-                className="bg-input/50"
+                placeholder="Sanatçı adı"
               />
             </Field>
 
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel>Genre *</FieldLabel>
+                <FieldLabel>Tür *</FieldLabel>
                 <Select
                   value={editArtist.genre || ''}
                   onValueChange={(value) => setEditArtist({ ...editArtist, genre: value })}
                 >
-                  <SelectTrigger className="bg-input/50">
-                    <SelectValue placeholder="Select genre" />
-                  </SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Tür seçin" />
+                    </SelectTrigger>
                   <SelectContent>
                     {artistGenres.map((g) => (
                       <SelectItem key={g} value={g}>{g}</SelectItem>
@@ -287,12 +287,11 @@ export default function CatalogPage() {
               </Field>
 
               <Field>
-                <FieldLabel>Country *</FieldLabel>
+                <FieldLabel>Ülke *</FieldLabel>
                 <Input
                   value={editArtist.country || ''}
                   onChange={(e) => setEditArtist({ ...editArtist, country: e.target.value })}
-                  placeholder="Country"
-                  className="bg-input/50"
+                  placeholder="Ülke"
                 />
               </Field>
             </div>
@@ -302,45 +301,42 @@ export default function CatalogPage() {
               <Textarea
                 value={editArtist.bio || ''}
                 onChange={(e) => setEditArtist({ ...editArtist, bio: e.target.value })}
-                placeholder="Short bio..."
+                placeholder="Kısa bio..."
                 rows={3}
-                className="bg-input/50 resize-none"
+                className="resize-none"
               />
             </Field>
 
             <Field>
-              <FieldLabel>Spotify Link</FieldLabel>
+              <FieldLabel>Spotify Linki</FieldLabel>
               <Input
                 value={editArtist.spotify_link || ''}
                 onChange={(e) => setEditArtist({ ...editArtist, spotify_link: e.target.value })}
                 placeholder="https://open.spotify.com/..."
-                className="bg-input/50"
               />
             </Field>
 
             <Field>
-              <FieldLabel>Instagram Link</FieldLabel>
+              <FieldLabel>Instagram Linki</FieldLabel>
               <Input
                 value={editArtist.instagram_link || ''}
                 onChange={(e) => setEditArtist({ ...editArtist, instagram_link: e.target.value })}
                 placeholder="https://instagram.com/..."
-                className="bg-input/50"
               />
             </Field>
 
             <Field>
-              <FieldLabel>Profile Image URL</FieldLabel>
+              <FieldLabel>Profil Görseli URL</FieldLabel>
               <Input
                 value={editArtist.image_url || ''}
                 onChange={(e) => setEditArtist({ ...editArtist, image_url: e.target.value })}
                 placeholder="https://example.com/image.jpg"
-                className="bg-input/50"
               />
             </Field>
 
             <Field>
               <div className="flex items-center justify-between">
-                <FieldLabel>Active Status</FieldLabel>
+                <FieldLabel>Aktif Durum</FieldLabel>
                 <Switch
                   checked={editArtist.status === 'ACTIVE'}
                   onCheckedChange={(checked) =>
@@ -353,10 +349,10 @@ export default function CatalogPage() {
 
           <DialogFooter className="mt-6">
             <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
-              Cancel
+              Vazgeç
             </Button>
-            <Button onClick={handleSave} disabled={isSaving} className="bg-primary hover:bg-primary/90">
-              {isSaving ? 'Saving...' : editArtist.id ? 'Update' : 'Add Artist'}
+            <Button onClick={handleSave} disabled={isSaving}>
+              {isSaving ? 'Kaydediliyor...' : editArtist.id ? 'Güncelle' : 'Ekle'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -364,19 +360,19 @@ export default function CatalogPage() {
 
       {/* Delete Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="glass">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="font-light">Confirm Delete</DialogTitle>
+            <DialogTitle className="font-semibold">Silme Onayı</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this artist? This action cannot be undone.
+              Bu sanatçıyı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
+              Vazgeç
             </Button>
             <Button variant="destructive" onClick={handleDelete}>
-              Delete
+              Sil
             </Button>
           </DialogFooter>
         </DialogContent>

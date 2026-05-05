@@ -1,8 +1,21 @@
 import { cookies } from 'next/headers'
 import { sql, User } from './db'
+import { ADMIN_ROLE, USER_ROLE, isAdminRole, type UserRole } from './roles'
 import bcrypt from 'bcryptjs'
 
 const SESSION_COOKIE_NAME = 'eclisor_session'
+
+function normalizeRole(role?: string): UserRole {
+  if (!role) {
+    return USER_ROLE
+  }
+  const normalized = role.toLowerCase() as UserRole
+  if (normalized === ADMIN_ROLE || normalized === USER_ROLE) {
+    return normalized
+  }
+  console.warn(`Invalid role value detected: ${role}`)
+  return USER_ROLE
+}
 
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10)
@@ -47,7 +60,8 @@ export async function getSession(): Promise<User | null> {
     return null
   }
   
-  return users[0] as User
+  const user = users[0] as User
+  return { ...user, role: normalizeRole(user.role) }
 }
 
 export async function destroySession(): Promise<void> {
@@ -70,15 +84,33 @@ export async function login(email: string, password: string): Promise<User | nul
   }
   
   await createSession(user.id)
-  return user
+  return { ...user, role: normalizeRole(user.role) }
 }
 
 export async function requireAuth(): Promise<User> {
   const user = await getSession()
-  
+
   if (!user) {
     throw new Error('Unauthorized')
   }
-  
+
+  return user
+}
+
+export function isAdmin(user: User | null): user is User & { role: 'admin' } {
+  return !!user && isAdminRole(user.role)
+}
+
+export async function requireAdmin(): Promise<User> {
+  const user = await getSession()
+
+  if (!user) {
+    throw new Error('Unauthorized')
+  }
+
+  if (!isAdmin(user)) {
+    throw new Error('Forbidden')
+  }
+
   return user
 }

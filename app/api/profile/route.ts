@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server'
 import { sql } from '@/lib/db'
-import { getSession, isAdmin } from '@/lib/auth'
+import { getSession } from '@/lib/auth'
 
 export async function PATCH(request: Request) {
   const user = await getSession()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const body = await request.json()

@@ -78,7 +78,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight text-balance"
+          className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance"
         >
           Your Sound. Your Universe.
         </motion.h1>
@@ -87,7 +87,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-6 text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto text-pretty"
+          className="mt-6 text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto text-pretty"
         >
           We distribute your music worldwide and connect you with the right opportunities.
         </motion.p>
@@ -103,8 +103,8 @@ export function Hero() {
             size="lg"
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-base rounded-full group"
           >
-            <Link href="/apply">
-              Apply Now
+            <Link href="/register">
+              Get Started
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>

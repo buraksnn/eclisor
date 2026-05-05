@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button'
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/pricing', label: 'Pricing' },
   { href: '/#services', label: 'Services' },
-  { href: '/apply', label: 'Apply' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -66,15 +66,20 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
             ) : (
-              <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
-                <Link href="/login">Login</Link>
-              </Button>
+              <>
+                <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  <Link href="/register">Register</Link>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
+                  <Link href="/login">Login</Link>
+                </Button>
+              </>
             )}
           </div>
 
@@ -116,11 +121,18 @@ export function Navbar() {
                   </Link>
                 </Button>
               ) : (
-                <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    Login
-                  </Link>
-                </Button>
+                <div className="flex flex-col gap-3">
+                  <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
+                    <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                      Register
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="glass border-primary/30 hover:bg-primary/10">
+                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      Login
+                    </Link>
+                  </Button>
+                </div>
               )}
             </div>
           </motion.div>
