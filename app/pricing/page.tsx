@@ -10,6 +10,7 @@ const plans = [
     priceMonthly: '$9',
     priceYearly: '$90',
     description: 'For new artists launching their first releases.',
+    royaltySplit: '80%',
     features: ['Unlimited uploads', 'Basic royalty splits', 'Global distribution', 'Artist analytics'],
   },
   {
@@ -17,6 +18,7 @@ const plans = [
     priceMonthly: '$19',
     priceYearly: '$190',
     description: 'For growing catalogs and serious promotion.',
+    royaltySplit: '85%',
     features: ['Everything in Starter', 'YouTube Content ID', 'Priority support', 'Pitching to playlists'],
     highlighted: true,
   },
@@ -25,17 +27,41 @@ const plans = [
     priceMonthly: '$49',
     priceYearly: '$490',
     description: 'For labels managing multiple artists.',
+    royaltySplit: '90%',
     features: ['Multi-artist dashboards', 'Advanced reporting', 'Custom contracts', 'Dedicated manager'],
   },
 ]
 
 const comparison = [
   { feature: 'Stores & DSPs', starter: '200+', pro: '250+', label: '300+' },
-  { feature: 'Royalty Splitter', starter: 'Basic', pro: 'Advanced', label: 'Custom' },
+  { feature: 'Royalty Split', starter: '80% to artist', pro: '85% to artist', label: '90% to artist' },
   { feature: 'YouTube Content ID', starter: '—', pro: 'Included', label: 'Included' },
   { feature: 'Priority Support', starter: '—', pro: 'Yes', label: 'Dedicated' },
   { feature: 'Label Suite', starter: '—', pro: '—', label: 'Yes' },
 ]
+
+function BillingDetails() {
+  return (
+    <div className="mt-14 grid gap-6 md:grid-cols-2">
+      <div className="border border-border/80 rounded-xl p-6 bg-card">
+        <h2 className="text-lg font-semibold">Billing schedule</h2>
+        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+          <li>Monthly or yearly billing. Plans renew on the same calendar day each cycle.</li>
+          <li>Invoices are issued automatically and emailed to your billing address.</li>
+          <li>You can switch between monthly and yearly billing from your dashboard.</li>
+        </ul>
+      </div>
+      <div className="border border-border/80 rounded-xl p-6 bg-card">
+        <h2 className="text-lg font-semibold">Commission & payouts</h2>
+        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+          <li>Royalty split is paid to the artist: 80% (Starter), 85% (Pro), 90% (Label).</li>
+          <li>Eclisor keeps the remaining commission to cover distribution, reporting, and support.</li>
+          <li>Payouts are processed monthly after DSP reports are finalized.</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
 
 export default function PricingPage() {
   return (
@@ -94,6 +120,10 @@ export default function PricingPage() {
                   </p>
                 </div>
                 <ul className={`space-y-2 text-sm ${plan.highlighted ? 'text-background/90' : 'text-foreground'}`}>
+                  <li className="flex items-center gap-2">
+                    <span className={`h-1.5 w-1.5 rounded-full ${plan.highlighted ? 'bg-background' : 'bg-foreground'}`} />
+                    Royalty split: {plan.royaltySplit} to artist
+                  </li>
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
                       <span className={`h-1.5 w-1.5 rounded-full ${plan.highlighted ? 'bg-background' : 'bg-foreground'}`} />
@@ -112,6 +142,8 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+
+          <BillingDetails />
 
           <div className="mt-16 border border-border/80 rounded-xl overflow-hidden">
             <div className="grid grid-cols-4 gap-0 text-sm">
