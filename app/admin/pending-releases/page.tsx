@@ -93,7 +93,7 @@ export default async function PendingReleasesPage() {
                   <audio
                     controls
                     className="w-full"
-                  aria-label={`${release.artist_name} - ${release.title} için ses önizlemesi`}
+                  aria-label={`Ses önizlemesi: ${release.title} - ${release.artist_name}`}
                 >
                   <source src={release.audio_url} />
                   Tarayıcınız ses öğesini desteklemiyor.

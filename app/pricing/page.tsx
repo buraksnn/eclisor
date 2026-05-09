@@ -32,12 +32,19 @@ const plans = [
   },
 ]
 
-const comparison = [
-  { feature: 'Mağazalar & DSP\'ler', starter: '200+', pro: '250+', label: '300+' },
-  { feature: 'Royalty Paylaşımı', starter: 'Sanatçıya %80', pro: 'Sanatçıya %85', label: 'Sanatçıya %90' },
-  { feature: 'YouTube Content ID', starter: '—', pro: 'Dahil', label: 'Dahil' },
-  { feature: 'Öncelikli Destek', starter: '—', pro: 'Var', label: 'Özel' },
-  { feature: 'Label Paketi', starter: '—', pro: '—', label: 'Var' },
+type ComparisonRow = {
+  feature: string
+  starterPlan: string
+  proPlan: string
+  labelPlan: string
+}
+
+const comparison: ComparisonRow[] = [
+  { feature: 'Mağazalar & DSP\'ler', starterPlan: '200+', proPlan: '250+', labelPlan: '300+' },
+  { feature: 'Royalty Paylaşımı', starterPlan: 'Sanatçıya %80', proPlan: 'Sanatçıya %85', labelPlan: 'Sanatçıya %90' },
+  { feature: 'YouTube Content ID', starterPlan: '—', proPlan: 'Dahil', labelPlan: 'Dahil' },
+  { feature: 'Öncelikli Destek', starterPlan: '—', proPlan: 'Var', labelPlan: 'Özel' },
+  { feature: 'Label Paketi', starterPlan: '—', proPlan: '—', labelPlan: 'Var' },
 ]
 
 function BillingDetails() {
@@ -154,9 +161,9 @@ export default function PricingPage() {
               {comparison.map((row) => (
                 <div key={row.feature} className="contents">
                   <div className="p-4 border-t border-border/80 text-muted-foreground">{row.feature}</div>
-                  <div className="p-4 border-t border-border/80">{row.starter}</div>
-                  <div className="p-4 border-t border-border/80">{row.pro}</div>
-                  <div className="p-4 border-t border-border/80">{row.label}</div>
+                  <div className="p-4 border-t border-border/80">{row.starterPlan}</div>
+                  <div className="p-4 border-t border-border/80">{row.proPlan}</div>
+                  <div className="p-4 border-t border-border/80">{row.labelPlan}</div>
                 </div>
               ))}
             </div>
