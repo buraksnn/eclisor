@@ -33,11 +33,11 @@ const plans = [
 ]
 
 const comparison = [
-  { feature: 'Mağazalar & DSP\'ler', starter: '200+', pro: '250+', label: '300+' },
-  { feature: 'Royalty Paylaşımı', starter: 'Sanatçıya %80', pro: 'Sanatçıya %85', label: 'Sanatçıya %90' },
-  { feature: 'YouTube Content ID', starter: '—', pro: 'Dahil', label: 'Dahil' },
-  { feature: 'Öncelikli Destek', starter: '—', pro: 'Var', label: 'Özel' },
-  { feature: 'Label Paketi', starter: '—', pro: '—', label: 'Var' },
+  { feature: 'Mağazalar & DSP\'ler', starter: '200+', pro: '250+', labelPlan: '300+' },
+  { feature: 'Royalty Paylaşımı', starter: 'Sanatçıya %80', pro: 'Sanatçıya %85', labelPlan: 'Sanatçıya %90' },
+  { feature: 'YouTube Content ID', starter: '—', pro: 'Dahil', labelPlan: 'Dahil' },
+  { feature: 'Öncelikli Destek', starter: '—', pro: 'Var', labelPlan: 'Özel' },
+  { feature: 'Label Paketi', starter: '—', pro: '—', labelPlan: 'Var' },
 ]
 
 function BillingDetails() {
@@ -156,7 +156,7 @@ export default function PricingPage() {
                   <div className="p-4 border-t border-border/80 text-muted-foreground">{row.feature}</div>
                   <div className="p-4 border-t border-border/80">{row.starter}</div>
                   <div className="p-4 border-t border-border/80">{row.pro}</div>
-                  <div className="p-4 border-t border-border/80">{row.label}</div>
+                  <div className="p-4 border-t border-border/80">{row.labelPlan}</div>
                 </div>
               ))}
             </div>
