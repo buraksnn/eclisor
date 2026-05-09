@@ -6,15 +6,15 @@ export async function POST(request: Request) {
   try {
     const user = await getSession()
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
     }
     if (!isAdmin(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
     }
     const { to, subject, message } = await request.json()
 
     if (!to || !subject || !message) {
-      return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+      return NextResponse.json({ error: 'Eksik alanlar' }, { status: 400 })
     }
 
     await sendEmail({
@@ -34,6 +34,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Send email error:', error)
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    return NextResponse.json({ error: 'E-posta gönderilemedi' }, { status: 500 })
   }
 }

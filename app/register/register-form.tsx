@@ -10,7 +10,7 @@ function SubmitButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? 'Creating account...' : 'Create account'}
+      {pending ? 'Hesap oluşturuluyor...' : 'Hesap oluştur'}
     </Button>
   )
 }
@@ -22,16 +22,16 @@ export function RegisterForm() {
     <form action={formAction} className="space-y-6">
       <FieldGroup>
         <Field>
-          <FieldLabel>Artist or Label Name</FieldLabel>
-          <Input name="name" placeholder="Your project name" required />
+          <FieldLabel>Sanatçı veya Label Adı</FieldLabel>
+          <Input name="name" placeholder="Proje adınız" required />
         </Field>
         <Field>
-          <FieldLabel>Email</FieldLabel>
-          <Input name="email" type="email" placeholder="you@label.com" required />
+          <FieldLabel>E-posta</FieldLabel>
+          <Input name="email" type="email" placeholder="ornek@label.com" required />
         </Field>
         <Field>
-          <FieldLabel>Password</FieldLabel>
-          <Input name="password" type="password" placeholder="Create a secure password" required />
+          <FieldLabel>Şifre</FieldLabel>
+          <Input name="password" type="password" placeholder="Güçlü bir şifre oluştur" required />
         </Field>
       </FieldGroup>
       {state?.error ? (

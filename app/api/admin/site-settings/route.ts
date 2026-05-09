@@ -5,10 +5,10 @@ import { getSession, isAdmin } from '@/lib/auth'
 export async function PUT(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const body = await request.json()

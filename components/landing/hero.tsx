@@ -80,7 +80,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance"
         >
-          Your Sound. Your Universe.
+          Sesin. Senin Evrenin.
         </motion.h1>
         
         <motion.p
@@ -89,7 +89,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-6 text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto text-pretty"
         >
-          We distribute your music worldwide and connect you with the right opportunities.
+          Müziğini dünya çapında dağıtıyor ve doğru fırsatlarla buluşturuyoruz.
         </motion.p>
 
         <motion.div
@@ -104,7 +104,7 @@ export function Hero() {
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-base rounded-full group"
           >
             <Link href="/register">
-              Get Started
+              Hemen Başla
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>

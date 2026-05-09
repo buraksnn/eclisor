@@ -15,12 +15,12 @@ export async function registerUser(_: RegisterState, formData: FormData): Promis
   const password = String(formData.get('password') || '')
 
   if (!name || !email || !password) {
-    return { error: 'Please fill in all required fields.' }
+    return { error: 'Lütfen tüm zorunlu alanları doldurun.' }
   }
 
   const existing = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`
   if (existing.length > 0) {
-    return { error: 'An account with this email already exists.' }
+    return { error: 'Bu e-posta ile kayıtlı bir hesap zaten var.' }
   }
 
   const hashedPassword = await hashPassword(password)

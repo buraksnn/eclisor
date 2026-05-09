@@ -8,10 +8,10 @@ export async function PATCH(
 ) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const { id } = await params
@@ -33,10 +33,10 @@ export async function DELETE(
 ) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const { id } = await params

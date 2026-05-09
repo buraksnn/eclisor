@@ -24,7 +24,7 @@ export function DashboardSidebar({ user }: { user: User }) {
       await fetch('/api/auth/logout', { method: 'POST' })
       router.push('/login')
     } catch {
-      toast.error('Failed to logout')
+      toast.error('Çıkış yapılamadı')
     }
   }
 
@@ -34,7 +34,7 @@ export function DashboardSidebar({ user }: { user: User }) {
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 border border-border/80 rounded-lg bg-background"
-        aria-label="Toggle menu"
+        aria-label="Menüyü aç/kapat"
       >
         {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>

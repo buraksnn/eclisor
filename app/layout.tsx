@@ -12,9 +12,9 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'Eclisor | Your Sound. Your Universe.',
-  description: 'Premium music distribution agency. We distribute your music worldwide and connect you with the right opportunities.',
-  keywords: ['music distribution', 'artist development', 'sync licensing', 'music promotion'],
+  title: 'Eclisor | Sesin. Senin Evrenin.',
+  description: 'Premium müzik dağıtım ajansı. Müziğinizi dünya çapında dağıtıyor ve doğru fırsatlarla buluşturuyoruz.',
+  keywords: ['müzik dağıtımı', 'sanatçı gelişimi', 'senkron lisanslama', 'müzik tanıtımı'],
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16' },
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-background ${outfit.variable}`}>
+    <html lang="tr" className={`bg-background ${outfit.variable}`}>
       <body className="font-sans antialiased min-h-screen">
         <Providers>
           {children}

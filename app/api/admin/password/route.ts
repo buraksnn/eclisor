@@ -5,23 +5,23 @@ import { getSession, hashPassword, isAdmin, verifyPassword } from '@/lib/auth'
 export async function PATCH(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const body = await request.json()
   const { currentPassword, newPassword } = body
 
   if (!currentPassword || !newPassword) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    return NextResponse.json({ error: 'Zorunlu alanlar eksik' }, { status: 400 })
   }
 
   // Verify current password
   const isValid = await verifyPassword(currentPassword, user.password)
   if (!isValid) {
-    return NextResponse.json({ error: 'Current password is incorrect' }, { status: 400 })
+    return NextResponse.json({ error: 'Mevcut şifre hatalı' }, { status: 400 })
   }
 
   // Hash new password

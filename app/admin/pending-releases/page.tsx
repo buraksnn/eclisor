@@ -20,7 +20,7 @@ async function approveRelease(formData: FormData) {
   await requireAdmin()
   const id = Number(formData.get('id'))
   if (!Number.isFinite(id) || id <= 0) {
-    throw new Error('Release ID must be a positive number')
+    throw new Error('Yayın ID pozitif bir sayı olmalıdır')
   }
   await sql`
     UPDATE releases
@@ -35,7 +35,7 @@ async function rejectRelease(formData: FormData) {
   await requireAdmin()
   const id = Number(formData.get('id'))
   if (!Number.isFinite(id) || id <= 0) {
-    throw new Error('Release ID must be a positive number')
+    throw new Error('Yayın ID pozitif bir sayı olmalıdır')
   }
   await sql`
     UPDATE releases
@@ -93,11 +93,11 @@ export default async function PendingReleasesPage() {
                   <audio
                     controls
                     className="w-full"
-                    aria-label={`Audio preview for ${release.title} by ${release.artist_name}`}
-                  >
-                    <source src={release.audio_url} />
-                    Your browser does not support the audio element.
-                  </audio>
+                  aria-label={`Ses önizlemesi: ${release.title} - ${release.artist_name}`}
+                >
+                  <source src={release.audio_url} />
+                  Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
                 </div>
                 <div className="flex flex-col gap-3">
                   <form action={approveRelease}>

@@ -6,23 +6,23 @@ import { Quote } from 'lucide-react'
 const testimonials = [
   {
     name: 'Alex Rivera',
-    role: 'Electronic Artist',
-    quote: 'Eclisor helped me reach audiences I never thought possible. Their team is incredible.',
+    role: 'Elektronik Sanatçı',
+    quote: 'Eclisor sayesinde hiç ulaşamayacağımı düşündüğüm kitlelere ulaştım. Ekip inanılmaz.',
   },
   {
     name: 'Sarah Chen',
-    role: 'Singer-Songwriter',
-    quote: 'The sync licensing opportunities have been game-changing for my career.',
+    role: 'Şarkıcı-Söz Yazarı',
+    quote: 'Senkron lisanslama fırsatları kariyerim için oyunun kurallarını değiştirdi.',
   },
   {
     name: 'Marcus Johnson',
-    role: 'Hip-Hop Producer',
-    quote: 'Professional, transparent, and they genuinely care about artist development.',
+    role: 'Hip-Hop Prodüktörü',
+    quote: 'Profesyoneller, şeffaflar ve sanatçı gelişimini gerçekten önemsiyorlar.',
   },
   {
     name: 'Luna Martinez',
-    role: 'Pop Artist',
-    quote: 'From day one, I felt supported. Best decision I made for my music career.',
+    role: 'Pop Sanatçısı',
+    quote: 'İlk günden beri desteklendim. Müzik kariyerim için verdiğim en iyi karardı.',
   },
 ]
 
@@ -37,9 +37,9 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">What Artists Say</h2>
+          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Sanatçılar Ne Diyor</h2>
           <p className="mt-4 text-muted-foreground font-light max-w-xl mx-auto">
-            Hear from artists who have grown with Eclisor
+            Eclisor ile büyüyen sanatçılardan dinleyin
           </p>
         </motion.div>
 

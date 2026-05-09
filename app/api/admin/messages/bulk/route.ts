@@ -5,17 +5,17 @@ import { getSession, isAdmin } from '@/lib/auth'
 export async function PATCH(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const body = await request.json()
   const { ids, is_read } = body
 
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
-    return NextResponse.json({ error: 'No IDs provided' }, { status: 400 })
+    return NextResponse.json({ error: 'ID bilgisi sağlanmadı' }, { status: 400 })
   }
 
   const idList = ids.join(',')
@@ -31,17 +31,17 @@ export async function PATCH(request: Request) {
 export async function DELETE(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const body = await request.json()
   const { ids } = body
 
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
-    return NextResponse.json({ error: 'No IDs provided' }, { status: 400 })
+    return NextResponse.json({ error: 'ID bilgisi sağlanmadı' }, { status: 400 })
   }
 
   const idList = ids.join(',')

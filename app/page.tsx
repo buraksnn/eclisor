@@ -26,9 +26,9 @@ export default async function HomePage() {
       <Services />
       <HowItWorks />
       <Stats
-        artistCount={settings?.artist_count || 500}
-        countryCount={settings?.country_count || 50}
-        streamCount={settings?.stream_count || '10M+'}
+        artistCount={settings?.artist_count || 50}
+        countryCount={settings?.country_count || 12}
+        streamCount={settings?.stream_count || '2M+'}
       />
       <Testimonials />
       <Footer />
