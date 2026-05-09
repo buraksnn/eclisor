@@ -7,20 +7,20 @@ const steps = [
   {
     icon: FileText,
     step: '01',
-    title: 'Apply',
-    description: 'Submit your application with your music and information.',
+    title: 'Başvur',
+    description: 'Müziğin ve bilgilerinle başvurunu gönder.',
   },
   {
     icon: Search,
     step: '02',
-    title: 'Get Reviewed',
-    description: 'Our team reviews your submission and evaluates your potential.',
+    title: 'Değerlendirme',
+    description: 'Ekibimiz başvurunu inceler ve potansiyelini değerlendirir.',
   },
   {
     icon: Rocket,
     step: '03',
-    title: 'Go Live',
-    description: 'Once accepted, your music goes live on all major platforms.',
+    title: 'Yayına Al',
+    description: 'Onaylandıktan sonra müziğin tüm büyük platformlarda yayına girer.',
   },
 ]
 
@@ -38,9 +38,9 @@ export function HowItWorks() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">How It Works</h2>
+          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Nasıl Çalışır</h2>
           <p className="mt-4 text-muted-foreground font-light max-w-xl mx-auto">
-            A simple three-step process to get your music heard worldwide
+            Müziğini dünyaya duyurmak için üç adımlı basit süreç
           </p>
         </motion.div>
 

@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { artistName, realName, email, country, genre, type, musicLink, socialLink, message } = body
 
     if (!artistName || !realName || !email || !country || !genre || !type) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+      return NextResponse.json({ error: 'Zorunlu alanlar eksik' }, { status: 400 })
     }
 
     await sql`
@@ -18,6 +18,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Failed to create application:', error)
-    return NextResponse.json({ error: 'Failed to create application' }, { status: 500 })
+    return NextResponse.json({ error: 'Başvuru oluşturulamadı' }, { status: 500 })
   }
 }

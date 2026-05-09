@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const { fullName, email, subject, message } = body
 
     if (!fullName || !email || !subject || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+      return NextResponse.json({ error: 'Zorunlu alanlar eksik' }, { status: 400 })
     }
 
     await sql`
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
               <td style="padding: 8px;">${fullName}</td>
             </tr>
             <tr style="background: #f9f9f9;">
-              <td style="padding: 8px; font-weight: bold;">Email:</td>
+              <td style="padding: 8px; font-weight: bold;">E-posta:</td>
               <td style="padding: 8px;">
                 <a href="mailto:${email}">${email}</a>
               </td>
@@ -52,6 +52,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Failed to create message:', error)
-    return NextResponse.json({ error: 'Failed to create message' }, { status: 500 })
+    return NextResponse.json({ error: 'Mesaj oluşturulamadı' }, { status: 500 })
   }
 }

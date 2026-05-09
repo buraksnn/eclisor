@@ -4,15 +4,15 @@ import { AboutSection } from '@/components/about/about-section'
 
 const teamCards = [
   {
-    title: 'A&R & Artist Success',
+    title: 'A&R ve Sanatçı Başarısı',
     description: 'Sanatçı gelişimi, katalog stratejisi ve büyüme planları.',
   },
   {
-    title: 'Distribution & Royalties',
+    title: 'Dağıtım ve Telifler',
     description: 'DSP dağıtımı, raporlama ve gelir takibi süreçleri.',
   },
   {
-    title: 'Creative & Brand',
+    title: 'Yaratıcı ve Marka',
     description: 'Görsel kimlik, kampanya kurguları ve yaratıcı üretim.',
   },
 ]
@@ -24,7 +24,7 @@ export default function AboutPage() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-5xl mx-auto space-y-12">
           <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">About</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Hakkımızda</p>
             <h1 className="text-4xl md:text-5xl font-semibold">Eclisor Hakkında</h1>
             <p className="text-sm text-muted-foreground">
               Bağımsız sanatçıları küresel sahneye taşımak için veri odaklı dağıtım, şeffaf raporlama ve yaratıcı

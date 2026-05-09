@@ -54,9 +54,9 @@ export function Stats({ artistCount, countryCount, streamCount }: StatsProps) {
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
   const stats: StatItem[] = [
-    { value: artistCount, suffix: '+', label: 'Artists' },
-    { value: countryCount, suffix: '+', label: 'Countries' },
-    { value: parseInt(streamCount.replace(/[^0-9]/g, '')) || 10, suffix: 'M+', label: 'Streams' },
+    { value: artistCount, suffix: '+', label: 'Sanatçı' },
+    { value: countryCount, suffix: '+', label: 'Ülke' },
+    { value: parseInt(streamCount.replace(/[^0-9]/g, '')) || 10, suffix: 'M+', label: 'Dinlenme' },
   ]
 
   return (

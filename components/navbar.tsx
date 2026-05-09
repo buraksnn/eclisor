@@ -7,11 +7,11 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/#services', label: 'Services' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'Ana Sayfa' },
+  { href: '/#services', label: 'Hizmetler' },
+  { href: '/pricing', label: 'Fiyatlandırma' },
+  { href: '/about', label: 'Hakkımızda' },
+  { href: '/contact', label: 'İletişim' },
 ]
 
 export function Navbar() {
@@ -70,15 +70,15 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/dashboard">Panel</Link>
               </Button>
             ) : (
               <>
                 <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Link href="/register">Register</Link>
+                  <Link href="/register">Kayıt Ol</Link>
                 </Button>
                 <Button asChild variant="outline" size="sm" className="glass border-primary/30 hover:bg-primary/10">
-                  <Link href="/login">Login</Link>
+                  <Link href="/login">Giriş Yap</Link>
                 </Button>
               </>
             )}
@@ -87,7 +87,7 @@ export function Navbar() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2"
-            aria-label="Toggle menu"
+            aria-label="Menüyü aç/kapat"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -118,19 +118,19 @@ export function Navbar() {
               {isLoggedIn ? (
                 <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
                   <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                    Dashboard
+                    Panel
                   </Link>
                 </Button>
               ) : (
                 <div className="flex flex-col gap-3">
                   <Button asChild className="mt-4 bg-primary hover:bg-primary/90">
                     <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                      Register
+                      Kayıt Ol
                     </Link>
                   </Button>
                   <Button asChild variant="outline" className="glass border-primary/30 hover:bg-primary/10">
                     <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                      Login
+                      Giriş Yap
                     </Link>
                   </Button>
                 </div>

@@ -7,18 +7,18 @@ export async function POST(request: Request) {
     const { email, password } = body
 
     if (!email || !password) {
-      return NextResponse.json({ error: 'Missing credentials' }, { status: 400 })
+      return NextResponse.json({ error: 'Eksik giriş bilgisi' }, { status: 400 })
     }
 
     const user = await login(email, password)
 
     if (!user) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      return NextResponse.json({ error: 'Giriş bilgileri hatalı' }, { status: 401 })
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Login error:', error)
-    return NextResponse.json({ error: 'Authentication failed' }, { status: 500 })
+    console.error('Giriş hatası:', error)
+    return NextResponse.json({ error: 'Kimlik doğrulama başarısız' }, { status: 500 })
   }
 }

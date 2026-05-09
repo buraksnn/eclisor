@@ -1,13 +1,13 @@
 import Link from 'next/link'
 
 const footerLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/#services', label: 'Services' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/privacy-policy', label: 'Privacy Policy' },
-  { href: '/terms-of-service', label: 'Terms of Service' },
+  { href: '/', label: 'Ana Sayfa' },
+  { href: '/#services', label: 'Hizmetler' },
+  { href: '/pricing', label: 'Fiyatlandırma' },
+  { href: '/about', label: 'Hakkımızda' },
+  { href: '/contact', label: 'İletişim' },
+  { href: '/privacy-policy', label: 'Gizlilik Politikası' },
+  { href: '/terms-of-service', label: 'Kullanım Şartları' },
 ]
 
 export function Footer() {
@@ -32,7 +32,7 @@ export function Footer() {
           </nav>
 
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Eclisor. All rights reserved.
+            &copy; {new Date().getFullYear()} Eclisor. Tüm hakları saklıdır.
           </p>
         </div>
       </div>

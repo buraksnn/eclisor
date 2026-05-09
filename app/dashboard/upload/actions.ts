@@ -21,27 +21,27 @@ export async function createRelease(_: UploadState, formData: FormData): Promise
   const coverFile = formData.get('cover') as File | null
 
   if (!title || !artist || !genre || !isrc || !releaseDate) {
-    return { error: 'Please complete all metadata fields.' }
+    return { error: 'Lütfen tüm meta veri alanlarını doldurun.' }
   }
   if (!audioFile || audioFile.size === 0) {
-    return { error: 'Please upload an audio file.' }
+    return { error: 'Lütfen bir ses dosyası yükleyin.' }
   }
   if (!coverFile || coverFile.size === 0) {
-    return { error: 'Please upload a cover image.' }
+    return { error: 'Lütfen bir kapak görseli yükleyin.' }
   }
   if (!audioFile.type.startsWith('audio/')) {
-    return { error: 'Audio file must be a valid audio format.' }
+    return { error: 'Ses dosyası geçerli bir ses formatı olmalıdır.' }
   }
   if (!coverFile.type.startsWith('image/')) {
-    return { error: 'Cover art must be an image file.' }
+    return { error: 'Kapak görseli bir resim dosyası olmalıdır.' }
   }
   const maxAudioSize = 50 * 1024 * 1024
   const maxCoverSize = 10 * 1024 * 1024
   if (audioFile.size > maxAudioSize) {
-    return { error: 'Audio file must be smaller than 50MB.' }
+    return { error: 'Ses dosyası 50MB boyutundan küçük olmalıdır.' }
   }
   if (coverFile.size > maxCoverSize) {
-    return { error: 'Cover art must be smaller than 10MB.' }
+    return { error: 'Kapak görseli 10MB boyutundan küçük olmalıdır.' }
   }
 
   const uploadRoot = path.join(process.cwd(), 'public', 'uploads')
@@ -67,10 +67,10 @@ export async function createRelease(_: UploadState, formData: FormData): Promise
   const audioExt = audioExtMap[audioFile.type]
   const coverExt = coverExtMap[coverFile.type]
   if (!audioExt) {
-    return { error: 'Audio file must be MP3, WAV, FLAC, M4A, or AAC.' }
+    return { error: 'Ses dosyası MP3, WAV, FLAC, M4A veya AAC olmalıdır.' }
   }
   if (!coverExt) {
-    return { error: 'Cover art must be JPG, PNG, or WebP.' }
+    return { error: 'Kapak görseli JPG, PNG veya WebP olmalıdır.' }
   }
   const audioName = `${crypto.randomUUID()}${audioExt}`
   const coverName = `${crypto.randomUUID()}${coverExt}`

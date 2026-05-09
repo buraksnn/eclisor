@@ -33,7 +33,7 @@ export function AdminSidebar({ user }: { user: User }) {
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 border border-border/80 rounded-lg bg-foreground text-background"
-        aria-label="Toggle admin menu"
+        aria-label="Yönetici menüsünü aç/kapat"
       >
         {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -55,7 +55,7 @@ export function AdminSidebar({ user }: { user: User }) {
             <Link href="/admin/pending-releases" className="text-lg font-semibold tracking-[0.35em]">
               ECLISOR
             </Link>
-            <p className="mt-3 text-xs uppercase tracking-[0.3em] text-background/60">Admin Panel</p>
+            <p className="mt-3 text-xs uppercase tracking-[0.3em] text-background/60">Yönetici Paneli</p>
           </div>
 
           <nav className="flex-1 space-y-2">

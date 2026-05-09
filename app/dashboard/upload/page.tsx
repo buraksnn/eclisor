@@ -11,7 +11,7 @@ function SubmitButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? 'Submitting release...' : 'Submit for approval'}
+      {pending ? 'Yayın gönderiliyor...' : 'Onay için gönder'}
     </Button>
   )
 }
@@ -47,15 +47,15 @@ export default function UploadPage() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Release Upload</p>
-        <h1 className="mt-4 text-3xl md:text-5xl font-semibold">Submit your next release</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Yayın Yükleme</p>
+        <h1 className="mt-4 text-3xl md:text-5xl font-semibold">Yeni yayınını gönder</h1>
           <p className="mt-3 text-muted-foreground">
-            Complete the steps below and send your track for review.
+            Aşağıdaki adımları tamamla ve parçanı inceleme için gönder.
           </p>
       </div>
 
       <div className="flex flex-wrap gap-4">
-        {['Metadata', 'Files', 'Review'].map((label, index) => {
+        {['Bilgiler', 'Dosyalar', 'Özet'].map((label, index) => {
           const current = index + 1
           return (
             <div
@@ -76,33 +76,33 @@ export default function UploadPage() {
           <div className="glass-card rounded-2xl p-8 border border-border/80">
             <FieldGroup>
               <Field>
-                <FieldLabel>Track Title</FieldLabel>
+                <FieldLabel>Parça Adı</FieldLabel>
                 <Input
                   name="title"
                   value={metadata.title}
                   onChange={(event) => setMetadata({ ...metadata, title: event.target.value })}
-                  placeholder="Enter track name"
+                  placeholder="Parça adını gir"
                   required
                 />
               </Field>
               <Field>
-                <FieldLabel>Artist Name</FieldLabel>
+                <FieldLabel>Sanatçı Adı</FieldLabel>
                 <Input
                   name="artist"
                   value={metadata.artist}
                   onChange={(event) => setMetadata({ ...metadata, artist: event.target.value })}
-                  placeholder="Primary artist"
+                  placeholder="Ana sanatçı"
                   required
                 />
               </Field>
               <div className="grid gap-6 md:grid-cols-2">
                 <Field>
-                  <FieldLabel>Genre</FieldLabel>
+                  <FieldLabel>Tür</FieldLabel>
                   <Input
                     name="genre"
                     value={metadata.genre}
                     onChange={(event) => setMetadata({ ...metadata, genre: event.target.value })}
-                    placeholder="Pop, Electronic, Hip-Hop"
+                    placeholder="Pop, Elektronik, Hip-Hop"
                     required
                   />
                 </Field>
@@ -118,7 +118,7 @@ export default function UploadPage() {
                 </Field>
               </div>
               <Field>
-                <FieldLabel>Release Date</FieldLabel>
+                <FieldLabel>Yayın Tarihi</FieldLabel>
                 <Input
                   name="releaseDate"
                   type="date"
@@ -130,9 +130,9 @@ export default function UploadPage() {
             </FieldGroup>
           </div>
           <div className="mt-6 flex justify-end gap-3">
-            <Button type="button" size="lg" disabled={!metadataComplete} onClick={() => setStep(2)}>
-              Continue
-            </Button>
+              <Button type="button" size="lg" disabled={!metadataComplete} onClick={() => setStep(2)}>
+                Devam Et
+              </Button>
           </div>
         </div>
 
@@ -140,7 +140,7 @@ export default function UploadPage() {
           <div className="glass-card rounded-2xl p-8 border border-border/80 space-y-6">
             <FieldGroup>
               <Field>
-                <FieldLabel>Audio File</FieldLabel>
+                <FieldLabel>Ses Dosyası</FieldLabel>
                 <Input
                   name="audio"
                   type="file"
@@ -148,10 +148,10 @@ export default function UploadPage() {
                   required
                   onChange={(event) => setAudioName(event.target.files?.[0]?.name || '')}
                 />
-                {audioName ? <p className="text-xs text-muted-foreground mt-2">Selected: {audioName}</p> : null}
+                {audioName ? <p className="text-xs text-muted-foreground mt-2">Seçildi: {audioName}</p> : null}
               </Field>
               <Field>
-                <FieldLabel>Cover Art</FieldLabel>
+                <FieldLabel>Kapak Görseli</FieldLabel>
                 <Input
                   name="cover"
                   type="file"
@@ -166,17 +166,17 @@ export default function UploadPage() {
                   }}
                 />
                 {coverPreview ? (
-                  <img src={coverPreview} alt="Cover preview" className="mt-4 h-40 w-40 object-cover border" />
+                  <img src={coverPreview} alt="Kapak önizleme" className="mt-4 h-40 w-40 object-cover border" />
                 ) : null}
               </Field>
             </FieldGroup>
           </div>
           <div className="mt-6 flex justify-between gap-3">
             <Button type="button" variant="outline" size="lg" onClick={() => setStep(1)}>
-              Back
+              Geri
             </Button>
             <Button type="button" size="lg" disabled={!fileComplete} onClick={() => setStep(3)}>
-              Review
+              Özetle
             </Button>
           </div>
         </div>
@@ -184,17 +184,17 @@ export default function UploadPage() {
         <div className={step === 3 ? 'block' : 'hidden'}>
           <div className="glass-card rounded-2xl p-8 border border-border/80 space-y-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Review</p>
-              <h2 className="mt-3 text-2xl font-semibold">Confirm release details</h2>
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Özet</p>
+              <h2 className="mt-3 text-2xl font-semibold">Yayın detaylarını onayla</h2>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               {[
-                ['Title', metadata.title],
-                ['Artist', metadata.artist],
-                ['Genre', metadata.genre],
+                ['Başlık', metadata.title],
+                ['Sanatçı', metadata.artist],
+                ['Tür', metadata.genre],
                 ['ISRC', metadata.isrc],
-                ['Release Date', metadata.releaseDate],
-                ['Audio File', audioName || 'Not selected'],
+                ['Yayın Tarihi', metadata.releaseDate],
+                ['Ses Dosyası', audioName || 'Seçilmedi'],
               ].map(([label, value]) => (
                 <div key={label} className="border border-border/80 rounded-lg p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
@@ -203,10 +203,10 @@ export default function UploadPage() {
               ))}
               {coverPreview ? (
                 <div className="border border-border/80 rounded-lg p-4 flex items-center gap-4">
-                  <img src={coverPreview} alt="Cover preview" className="h-20 w-20 object-cover border" />
+                  <img src={coverPreview} alt="Kapak önizleme" className="h-20 w-20 object-cover border" />
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Cover Art</p>
-                    <p className="mt-2 font-semibold text-sm">Ready</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Kapak Görseli</p>
+                    <p className="mt-2 font-semibold text-sm">Hazır</p>
                   </div>
                 </div>
               ) : null}
@@ -215,12 +215,12 @@ export default function UploadPage() {
           {state?.error ? <p className="text-sm text-destructive mt-4">{state.error}</p> : null}
           {state?.success ? (
             <p className="text-sm text-foreground mt-4">
-              Release submitted. We will review it shortly.
+              Yayın gönderildi. Kısa süre içinde inceleyeceğiz.
             </p>
           ) : null}
           <div className="mt-6 flex justify-between gap-3">
             <Button type="button" variant="outline" size="lg" onClick={() => setStep(2)}>
-              Back
+              Geri
             </Button>
             <SubmitButton />
           </div>

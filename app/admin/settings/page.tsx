@@ -23,13 +23,13 @@ export default function AdminSettingsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [siteSettings, setSiteSettings] = useState<SiteSettingsData>({
-    tagline: 'Your Sound. Your Universe.',
+    tagline: 'Sesin. Senin Evrenin.',
     contact_email: 'info@eclisor.com',
-    location: 'Istanbul, Turkey',
-    response_time: '48 hours',
-    artist_count: 500,
-    country_count: 50,
-    stream_count: '10M+',
+    location: 'İstanbul, Türkiye',
+    response_time: '48 saat',
+    artist_count: 50,
+    country_count: 12,
+    stream_count: '2M+',
   })
 
   useEffect(() => {
@@ -37,16 +37,16 @@ export default function AdminSettingsPage() {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          setSiteSettings({
-            id: data.id,
-            tagline: data.tagline || 'Your Sound. Your Universe.',
-            contact_email: data.contact_email || 'info@eclisor.com',
-            location: data.location || 'Istanbul, Turkey',
-            response_time: data.response_time || '48 hours',
-            artist_count: data.artist_count || 500,
-            country_count: data.country_count || 50,
-            stream_count: data.stream_count || '10M+',
-          })
+            setSiteSettings({
+              id: data.id,
+              tagline: data.tagline || 'Sesin. Senin Evrenin.',
+              contact_email: data.contact_email || 'info@eclisor.com',
+              location: data.location || 'İstanbul, Türkiye',
+              response_time: data.response_time || '48 saat',
+              artist_count: data.artist_count || 50,
+              country_count: data.country_count || 12,
+              stream_count: data.stream_count || '2M+',
+            })
         }
       })
       .finally(() => setIsLoading(false))
@@ -158,7 +158,7 @@ export default function AdminSettingsPage() {
               <Input
                 value={siteSettings.stream_count}
                 onChange={(e) => setSiteSettings({ ...siteSettings, stream_count: e.target.value })}
-                placeholder="e.g. 10M+"
+                placeholder="örn. 10M+"
               />
             </Field>
           </div>

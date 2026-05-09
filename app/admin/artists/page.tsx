@@ -14,9 +14,35 @@ import { Search, Plus, Pencil, Trash2, Music } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type { ArtistCatalog } from '@/lib/db'
 
-const genres = ['All', 'Pop', 'Hip-Hop', 'Electronic', 'Rock', 'R&B', 'Classical', 'Other']
-const artistGenres = ['Pop', 'Hip-Hop', 'Electronic', 'Rock', 'R&B', 'Classical', 'Other']
-const statuses = ['All', 'ACTIVE', 'INACTIVE']
+const genres = [
+  { value: 'All', label: 'Tümü' },
+  { value: 'Pop', label: 'Pop' },
+  { value: 'Hip-Hop', label: 'Hip-Hop' },
+  { value: 'Electronic', label: 'Elektronik' },
+  { value: 'Rock', label: 'Rock' },
+  { value: 'R&B', label: 'R&B' },
+  { value: 'Classical', label: 'Klasik' },
+  { value: 'Other', label: 'Diğer' },
+]
+const artistGenres = [
+  { value: 'Pop', label: 'Pop' },
+  { value: 'Hip-Hop', label: 'Hip-Hop' },
+  { value: 'Electronic', label: 'Elektronik' },
+  { value: 'Rock', label: 'Rock' },
+  { value: 'R&B', label: 'R&B' },
+  { value: 'Classical', label: 'Klasik' },
+  { value: 'Other', label: 'Diğer' },
+]
+const statuses = [
+  { value: 'All', label: 'Tümü' },
+  { value: 'ACTIVE', label: 'Aktif' },
+  { value: 'INACTIVE', label: 'Pasif' },
+]
+
+const statusLabels: Record<string, string> = {
+  ACTIVE: 'Aktif',
+  INACTIVE: 'Pasif',
+}
 
 const emptyArtist = {
   artist_name: '',
@@ -53,7 +79,7 @@ export default function CatalogPage() {
       const data = await res.json()
       setArtists(data)
     } catch {
-      toast.error('Failed to load artists')
+      toast.error('Sanatçılar yüklenemedi')
     } finally {
       setIsLoading(false)
     }
@@ -65,7 +91,7 @@ export default function CatalogPage() {
 
   const handleSave = async () => {
     if (!editArtist.artist_name || !editArtist.genre || !editArtist.country) {
-      toast.error('Please fill required fields')
+      toast.error('Lütfen gerekli alanları doldurun')
       return
     }
 
@@ -80,12 +106,12 @@ export default function CatalogPage() {
         body: JSON.stringify(editArtist),
       })
 
-      toast.success(editArtist.id ? 'Artist updated' : 'Artist added')
+      toast.success(editArtist.id ? 'Sanatçı güncellendi' : 'Sanatçı eklendi')
       setEditDialogOpen(false)
       setEditArtist(emptyArtist)
       fetchArtists()
     } catch {
-      toast.error('Failed to save artist')
+      toast.error('Sanatçı kaydedilemedi')
     } finally {
       setIsSaving(false)
     }
@@ -95,12 +121,12 @@ export default function CatalogPage() {
     if (!deleteTarget) return
     try {
       await fetch(`/api/admin/catalog/${deleteTarget}`, { method: 'DELETE' })
-      toast.success('Artist deleted')
+      toast.success('Sanatçı silindi')
       setDeleteDialogOpen(false)
       setDeleteTarget(null)
       fetchArtists()
     } catch {
-      toast.error('Failed to delete artist')
+      toast.error('Sanatçı silinemedi')
     }
   }
 
@@ -154,8 +180,8 @@ export default function CatalogPage() {
               <SelectValue placeholder="Tür" />
             </SelectTrigger>
             <SelectContent>
-              {genres.map((g) => (
-                <SelectItem key={g} value={g}>{g}</SelectItem>
+              {genres.map((genre) => (
+                <SelectItem key={genre.value} value={genre.value}>{genre.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -164,8 +190,8 @@ export default function CatalogPage() {
               <SelectValue placeholder="Durum" />
             </SelectTrigger>
             <SelectContent>
-              {statuses.map((s) => (
-                <SelectItem key={s} value={s}>{s}</SelectItem>
+              {statuses.map((status) => (
+                <SelectItem key={status.value} value={status.value}>{status.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -214,7 +240,7 @@ export default function CatalogPage() {
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="text-lg font-semibold">{artist.artist_name}</h3>
                   <Badge className={artist.status === 'ACTIVE' ? 'bg-green-500/20 text-green-400' : 'bg-muted text-muted-foreground'}>
-                    {artist.status}
+                    {statusLabels[artist.status] || artist.status}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-1">{artist.genre}</p>
@@ -223,15 +249,15 @@ export default function CatalogPage() {
                   <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{artist.bio}</p>
                 )}
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => openEditDialog(artist)}
-                  >
-                    <Pencil size={14} className="mr-2" />
-                    Edit
-                  </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => openEditDialog(artist)}
+                    >
+                      <Pencil size={14} className="mr-2" />
+                      Düzenle
+                    </Button>
                   <Button
                     variant="outline"
                     size="sm"
@@ -279,8 +305,8 @@ export default function CatalogPage() {
                       <SelectValue placeholder="Tür seçin" />
                     </SelectTrigger>
                   <SelectContent>
-                    {artistGenres.map((g) => (
-                      <SelectItem key={g} value={g}>{g}</SelectItem>
+                    {artistGenres.map((genre) => (
+                      <SelectItem key={genre.value} value={genre.value}>{genre.label}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>

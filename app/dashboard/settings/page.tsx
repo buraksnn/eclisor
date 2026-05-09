@@ -75,10 +75,10 @@ export default function SettingsPage() {
         }),
       })
 
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Failed to update password')
-      }
+        if (!res.ok) {
+          const data = await res.json()
+          throw new Error(data.error || 'Şifre güncellenemedi')
+        }
 
       toast.success('Şifre güncellendi')
       setPasswords({ current: '', new: '', confirm: '' })

@@ -5,14 +5,14 @@ import { getSession } from '@/lib/auth'
 export async function PATCH(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
 
   const body = await request.json()
   const { name, email } = body
 
   if (!name || !email) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    return NextResponse.json({ error: 'Zorunlu alanlar eksik' }, { status: 400 })
   }
 
   await sql`

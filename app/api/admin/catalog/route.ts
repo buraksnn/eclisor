@@ -5,10 +5,10 @@ import { getSession, isAdmin } from '@/lib/auth'
 export async function GET(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const { searchParams } = new URL(request.url)
@@ -43,17 +43,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const user = await getSession()
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Yetkisiz erişim' }, { status: 401 })
   }
   if (!isAdmin(user)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return NextResponse.json({ error: 'Erişim reddedildi' }, { status: 403 })
   }
 
   const body = await request.json()
   const { artist_name, genre, country, bio, spotify_link, instagram_link, image_url, status } = body
 
   if (!artist_name || !genre || !country) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    return NextResponse.json({ error: 'Zorunlu alanlar eksik' }, { status: 400 })
   }
 
   const result = await sql`

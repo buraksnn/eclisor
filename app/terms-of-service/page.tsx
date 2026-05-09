@@ -9,7 +9,7 @@ export default function TermsOfServicePage() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-3xl mx-auto space-y-10">
           <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Terms of Service</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Kullanım Şartları</p>
             <h1 className="text-4xl md:text-5xl font-semibold">Kullanım Şartları</h1>
             <p className="text-sm text-muted-foreground">Son güncelleme: 9 Mayıs 2026</p>
           </header>

@@ -6,23 +6,23 @@ import { Globe, Mic2, Music, Megaphone } from 'lucide-react'
 const services = [
   {
     icon: Globe,
-    title: 'Music Distribution',
-    description: 'Get your music on Spotify, Apple Music, Amazon, and 150+ platforms worldwide.',
+    title: 'Müzik Dağıtımı',
+    description: 'Müziğini Spotify, Apple Music, Amazon ve 150+ platformda dünyaya ulaştır.',
   },
   {
     icon: Mic2,
-    title: 'Artist Development',
-    description: 'Strategic guidance to help you grow your career and build a sustainable brand.',
+    title: 'Sanatçı Gelişimi',
+    description: 'Kariyerini büyütmek ve sürdürülebilir bir marka kurmak için stratejik rehberlik.',
   },
   {
     icon: Music,
-    title: 'Sync Licensing',
-    description: 'Connect your music with film, TV, commercials, and gaming opportunities.',
+    title: 'Senkron Lisanslama',
+    description: 'Müziğini film, dizi, reklam ve oyun fırsatlarıyla buluştur.',
   },
   {
     icon: Megaphone,
-    title: 'PR & Promotion',
-    description: 'Professional press coverage, playlist pitching, and social media campaigns.',
+    title: 'PR ve Tanıtım',
+    description: 'Profesyonel basın çalışmaları, playlist pitching ve sosyal medya kampanyaları.',
   },
 ]
 
@@ -37,9 +37,9 @@ export function Services() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Our Services</h2>
+          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Hizmetlerimiz</h2>
           <p className="mt-4 text-muted-foreground font-light max-w-xl mx-auto">
-            Everything you need to take your music career to the next level
+            Müzik kariyerini bir üst seviyeye taşımak için ihtiyaç duyduğun her şey
           </p>
         </motion.div>
 

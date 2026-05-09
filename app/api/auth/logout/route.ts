@@ -6,7 +6,7 @@ export async function POST() {
     await destroySession()
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Logout error:', error)
-    return NextResponse.json({ error: 'Logout failed' }, { status: 500 })
+    console.error('Çıkış hatası:', error)
+    return NextResponse.json({ error: 'Çıkış yapılamadı' }, { status: 500 })
   }
 }

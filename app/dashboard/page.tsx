@@ -70,7 +70,7 @@ export default async function DashboardPage() {
                 <div className="relative h-44 w-full md:h-full md:min-h-[180px]">
                   <Image
                     src={release.cover_url}
-                    alt={`${release.title} cover`}
+                      alt={`${release.title} kapak görseli`}
                     fill
                     className="object-cover"
                   />

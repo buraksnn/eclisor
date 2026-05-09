@@ -13,7 +13,7 @@ import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import { Mail, MapPin, Clock } from 'lucide-react'
 
-const subjects = ['General Inquiry', 'Partnership', 'Press', 'Other']
+const subjects = ['Genel Bilgi', 'İş Birliği', 'Basın', 'Diğer']
 
 type SiteInfo = {
   contact_email: string
@@ -25,8 +25,8 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [siteInfo, setSiteInfo] = useState<SiteInfo>({
     contact_email: 'info@eclisor.com',
-    location: 'Istanbul, Turkey',
-    response_time: '48 hours',
+    location: 'İstanbul, Türkiye',
+    response_time: '48 saat',
   })
   const [formData, setFormData] = useState({
     fullName: '',
@@ -40,11 +40,11 @@ export default function ContactPage() {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          setSiteInfo({
-            contact_email: data.contact_email || 'info@eclisor.com',
-            location: data.location || 'Istanbul, Turkey',
-            response_time: data.response_time || '48 hours',
-          })
+            setSiteInfo({
+              contact_email: data.contact_email || 'info@eclisor.com',
+              location: data.location || 'İstanbul, Türkiye',
+              response_time: data.response_time || '48 saat',
+            })
         }
       })
       .catch(() => {})
@@ -62,10 +62,10 @@ export default function ContactPage() {
       })
 
       if (!res.ok) {
-        throw new Error('Failed to send message')
+        throw new Error('Mesaj gönderilemedi')
       }
 
-      toast.success(`Message received. We'll respond within ${siteInfo.response_time}.`)
+      toast.success(`Mesajınız alındı. ${siteInfo.response_time} içinde dönüş yapacağız.`)
       setFormData({
         fullName: '',
         email: '',
@@ -73,7 +73,7 @@ export default function ContactPage() {
         message: '',
       })
     } catch {
-      toast.error('Something went wrong. Please try again.')
+      toast.error('Bir şeyler yanlış gitti. Lütfen tekrar deneyin.')
     } finally {
       setIsSubmitting(false)
     }
@@ -91,9 +91,9 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">Contact Us</h1>
+            <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">İletişime Geçin</h1>
             <p className="mt-4 text-muted-foreground font-light">
-              Have questions? We&apos;d love to hear from you
+              Sorularınız mı var? Sizden haber almayı çok isteriz.
             </p>
           </motion.div>
 
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <Mail className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-light mb-1">Email</h3>
+                    <h3 className="font-light mb-1">E-posta</h3>
                     <a
                       href={`mailto:${siteInfo.contact_email}`}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -128,7 +128,7 @@ export default function ContactPage() {
                     <MapPin className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-light mb-1">Location</h3>
+                    <h3 className="font-light mb-1">Konum</h3>
                     <p className="text-sm text-muted-foreground">{siteInfo.location}</p>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function ContactPage() {
                     <Clock className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-light mb-1">Response Time</h3>
+                    <h3 className="font-light mb-1">Yanıt Süresi</h3>
                     <p className="text-sm text-muted-foreground">{siteInfo.response_time}</p>
                   </div>
                 </div>
@@ -158,12 +158,12 @@ export default function ContactPage() {
               <FieldGroup>
                 <div className="grid md:grid-cols-2 gap-6">
                   <Field>
-                    <FieldLabel>Full Name *</FieldLabel>
+                    <FieldLabel>Ad Soyad *</FieldLabel>
                     <Input
                       required
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      placeholder="Your name"
+                      placeholder="Adınız"
                       className="bg-input/50 border-border/50"
                     />
                   </Field>
@@ -182,13 +182,13 @@ export default function ContactPage() {
                 </div>
 
                 <Field>
-                  <FieldLabel>Subject *</FieldLabel>
+                  <FieldLabel>Konu *</FieldLabel>
                   <Select
                     value={formData.subject}
                     onValueChange={(value) => setFormData({ ...formData, subject: value })}
                   >
                     <SelectTrigger className="bg-input/50 border-border/50">
-                      <SelectValue placeholder="Select subject" />
+                      <SelectValue placeholder="Konu seçin" />
                     </SelectTrigger>
                     <SelectContent>
                       {subjects.map((subject) => (
@@ -199,12 +199,12 @@ export default function ContactPage() {
                 </Field>
 
                 <Field>
-                  <FieldLabel>Message *</FieldLabel>
+                  <FieldLabel>Mesaj *</FieldLabel>
                   <Textarea
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="How can we help you?"
+                    placeholder="Size nasıl yardımcı olabiliriz?"
                     rows={6}
                     className="bg-input/50 border-border/50 resize-none"
                   />
@@ -217,7 +217,7 @@ export default function ContactPage() {
                 className="w-full mt-8 bg-primary hover:bg-primary/90"
               >
                 {isSubmitting ? <Spinner className="mr-2" /> : null}
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? 'Gönderiliyor...' : 'Mesaj Gönder'}
               </Button>
             </motion.form>
           </div>

@@ -30,13 +30,13 @@ export default function LoginPage() {
       })
 
       if (!res.ok) {
-        toast.error('Invalid credentials')
+        toast.error('Bilgiler hatalı')
         return
       }
 
       router.push('/dashboard')
     } catch {
-      toast.error('Something went wrong. Please try again.')
+      toast.error('Bir şeyler yanlış gitti. Lütfen tekrar deneyin.')
     } finally {
       setIsLoading(false)
     }
@@ -62,32 +62,32 @@ export default function LoginPage() {
 
         <div className="glass rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-light">Welcome back</h1>
+            <h1 className="text-2xl font-light">Tekrar hoş geldin</h1>
           </div>
 
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel>Email</FieldLabel>
+                <FieldLabel>E-posta</FieldLabel>
                 <Input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="you@example.com"
+                  placeholder="ornek@eposta.com"
                   className="bg-input/50 border-border/50"
                   autoComplete="email"
                 />
               </Field>
 
               <Field>
-                <FieldLabel>Password</FieldLabel>
+                <FieldLabel>Şifre</FieldLabel>
                 <Input
                   type="password"
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  placeholder="Enter your password"
+                  placeholder="Şifreni gir"
                   className="bg-input/50 border-border/50"
                   autoComplete="current-password"
                 />
@@ -100,20 +100,20 @@ export default function LoginPage() {
               className="w-full mt-8 bg-primary hover:bg-primary/90"
             >
               {isLoading ? <Spinner className="mr-2" /> : null}
-              {isLoading ? 'Signing in...' : 'Login'}
+              {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
             </Button>
           </form>
         </div>
 
         <div className="text-center text-sm text-muted-foreground mt-6 space-y-2">
           <p>
-            New to Eclisor?{' '}
+            Eclisor&apos;da yeni misin?{' '}
             <Link href="/register" className="text-foreground underline underline-offset-4">
-              Create an account
+              Hesap oluştur
             </Link>
           </p>
           <Link href="/" className="hover:text-foreground transition-colors">
-            &larr; Back to home
+            &larr; Ana sayfaya dön
           </Link>
         </div>
       </motion.div>
