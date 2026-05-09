@@ -10,7 +10,7 @@ const plans = [
     priceMonthly: '$9',
     priceYearly: '$90',
     description: 'İlk yayınlarını çıkaran yeni sanatçılar için.',
-    royaltySplit: '80%',
+    royaltySplit: 80,
     features: ['Sınırsız yükleme', 'Temel royalty paylaşımı', 'Küresel dağıtım', 'Sanatçı analitiği'],
   },
   {
@@ -18,7 +18,7 @@ const plans = [
     priceMonthly: '$19',
     priceYearly: '$190',
     description: 'Büyüyen kataloglar ve ciddi tanıtım için.',
-    royaltySplit: '85%',
+    royaltySplit: 85,
     features: ['Başlangıç planındaki her şey', 'YouTube Content ID', 'Öncelikli destek', 'Playlist pitching'],
     highlighted: true,
   },
@@ -27,7 +27,7 @@ const plans = [
     priceMonthly: '$49',
     priceYearly: '$490',
     description: 'Birden fazla sanatçı yöneten label ekipleri için.',
-    royaltySplit: '90%',
+    royaltySplit: 90,
     features: ['Çoklu sanatçı panelleri', 'Gelişmiş raporlama', 'Özel sözleşmeler', 'Özel temsilci'],
   },
 ]
@@ -122,7 +122,7 @@ export default function PricingPage() {
                 <ul className={`space-y-2 text-sm ${plan.highlighted ? 'text-background/90' : 'text-foreground'}`}>
                   <li className="flex items-center gap-2">
                     <span className={`h-1.5 w-1.5 rounded-full ${plan.highlighted ? 'bg-background' : 'bg-foreground'}`} />
-                    Royalty paylaşımı: sanatçıya %{plan.royaltySplit.replace('%', '')}
+                    Royalty paylaşımı: sanatçıya %{plan.royaltySplit}
                   </li>
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">

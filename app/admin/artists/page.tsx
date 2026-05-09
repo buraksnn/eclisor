@@ -180,8 +180,8 @@ export default function CatalogPage() {
               <SelectValue placeholder="Tür" />
             </SelectTrigger>
             <SelectContent>
-              {genres.map((genre) => (
-                <SelectItem key={genre.value} value={genre.value}>{genre.label}</SelectItem>
+              {genres.map((genreOption) => (
+                <SelectItem key={genreOption.value} value={genreOption.value}>{genreOption.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -305,8 +305,8 @@ export default function CatalogPage() {
                       <SelectValue placeholder="Tür seçin" />
                     </SelectTrigger>
                   <SelectContent>
-                    {artistGenres.map((genre) => (
-                      <SelectItem key={genre.value} value={genre.value}>{genre.label}</SelectItem>
+                    {artistGenres.map((genreOption) => (
+                      <SelectItem key={genreOption.value} value={genreOption.value}>{genreOption.label}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
