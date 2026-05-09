@@ -40,7 +40,7 @@ type ComparisonRow = {
 }
 
 const comparison: ComparisonRow[] = [
-  { feature: 'Mağazalar & DSP\'ler', starterPlan: '200+', proPlan: '250+', labelPlan: '300+' },
+  { feature: "Mağazalar & DSP'ler", starterPlan: '200+', proPlan: '250+', labelPlan: '300+' },
   { feature: 'Royalty Paylaşımı', starterPlan: 'Sanatçıya %80', proPlan: 'Sanatçıya %85', labelPlan: 'Sanatçıya %90' },
   { feature: 'YouTube Content ID', starterPlan: '—', proPlan: 'Dahil', labelPlan: 'Dahil' },
   { feature: 'Öncelikli Destek', starterPlan: '—', proPlan: 'Var', labelPlan: 'Özel' },
