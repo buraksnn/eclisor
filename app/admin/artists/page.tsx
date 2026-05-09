@@ -40,8 +40,8 @@ const statuses = [
 ]
 
 const statusLabels: Record<string, string> = {
-  ACTIVE: 'Aktif',
-  INACTIVE: 'Pasif',
+  'ACTIVE': 'Aktif',
+  'INACTIVE': 'Pasif',
 }
 
 const emptyArtist = {
