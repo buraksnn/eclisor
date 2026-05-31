@@ -1,19 +1,25 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit } from 'next/font/google'
+import { Bebas_Neue, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Toaster } from 'react-hot-toast'
-import { Providers } from '@/components/providers'
 import './globals.css'
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-outfit',
+const bebas = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-bebas',
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-dm',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: 'Eclisor | Sesin. Senin Evrenin.',
-  description: 'Premium müzik dağıtım ajansı. Müziğinizi dünya çapında dağıtıyor ve doğru fırsatlarla buluşturuyoruz.',
+  description:
+    'Premium müzik dağıtım ajansı. Müziğinizi dünya çapında dağıtıyor ve doğru fırsatlarla buluşturuyoruz.',
   keywords: ['müzik dağıtımı', 'sanatçı gelişimi', 'senkron lisanslama', 'müzik tanıtımı'],
   icons: {
     icon: [
@@ -28,7 +34,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0F',
+  themeColor: '#0a0a0f',
   width: 'device-width',
   initialScale: 1,
 }
@@ -39,23 +45,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="tr" className={`bg-background ${outfit.variable}`}>
+    <html lang="tr" className={`${bebas.variable} ${dmSans.variable}`}>
       <body className="font-sans antialiased min-h-screen">
-        <Providers>
-          {children}
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: 'oklch(0.15 0.02 280 / 0.9)',
-                color: 'oklch(0.95 0 0)',
-                border: '1px solid oklch(1 0 0 / 0.1)',
-                backdropFilter: 'blur(16px)',
-              },
-            }}
-          />
-          {process.env.NODE_ENV === 'production' && <Analytics />}
-        </Providers>
+        {children}
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

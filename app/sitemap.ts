@@ -1,16 +1,11 @@
 export default function sitemap() {
-  return [
-    {
-      url: 'https://eclisor.com',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: 'https://eclisor.com/contact',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-  ]
+  const base = 'https://eclisor.com'
+  const routes = ['', '/about', '/pricing', '/contact', '/privacy-policy', '/terms-of-service']
+
+  return routes.map((path) => ({
+    url: `${base}${path}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: path === '' ? 1 : 0.7,
+  }))
 }
