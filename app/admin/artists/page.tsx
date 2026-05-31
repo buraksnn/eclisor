@@ -248,7 +248,7 @@ export default function CatalogPage() {
                 {artist.bio && (
                   <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{artist.bio}</p>
                 )}
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="outline"
                       size="sm"
