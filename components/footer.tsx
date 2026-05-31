@@ -6,35 +6,43 @@ const footerLinks = [
   { href: '/pricing', label: 'Fiyatlandırma' },
   { href: '/about', label: 'Hakkımızda' },
   { href: '/contact', label: 'İletişim' },
-  { href: '/privacy-policy', label: 'Gizlilik Politikası' },
-  { href: '/terms-of-service', label: 'Kullanım Şartları' },
+  { href: '/privacy-policy', label: 'Gizlilik' },
+  { href: '/terms-of-service', label: 'Şartlar' },
 ]
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/50 py-12 px-6">
+    <footer className="border-t border-border py-16 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link href="/" className="text-xl font-light tracking-wider">
-            ECLISOR
-          </Link>
+        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Link
+              href="/"
+              className="font-display text-3xl tracking-[0.25em] text-foreground hover:text-accent transition-colors"
+            >
+              ECLISOR
+            </Link>
+            <p className="mt-3 text-sm text-muted-foreground max-w-xs leading-relaxed">
+              Bağımsız sanatçılar için küresel müzik dağıtımı ve yaratıcı destek.
+            </p>
+          </div>
 
-          <nav className="flex items-center gap-8">
+          <nav className="flex flex-wrap gap-x-8 gap-y-3">
             {footerLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-accent transition-colors"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
-
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Eclisor. Tüm hakları saklıdır.
-          </p>
         </div>
+
+        <p className="mt-12 text-xs text-muted-foreground/70 uppercase tracking-[0.2em]">
+          &copy; {new Date().getFullYear()} Eclisor — Tüm hakları saklıdır.
+        </p>
       </div>
     </footer>
   )

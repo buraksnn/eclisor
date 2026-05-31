@@ -1,7 +1,16 @@
 import { neon } from '@neondatabase/serverless'
 import type { UserRole } from './roles'
 
-export const sql = neon(process.env.DATABASE_URL!)
+type SqlClient = ReturnType<typeof neon>
+
+function createMockSql(): SqlClient {
+  const mock = async () => [] as unknown[]
+  return mock as SqlClient
+}
+
+export const sql: SqlClient = process.env.DATABASE_URL
+  ? neon(process.env.DATABASE_URL)
+  : createMockSql()
 
 export type User = {
   id: number

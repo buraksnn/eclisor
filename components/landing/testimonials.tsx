@@ -28,7 +28,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-32 px-6 overflow-hidden">
+    <section className="py-28 px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -37,13 +37,11 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Sanatçılar Ne Diyor</h2>
-          <p className="mt-4 text-muted-foreground font-light max-w-xl mx-auto">
-            Eclisor ile büyüyen sanatçılardan dinleyin
-          </p>
+          <p className="section-tag">Referanslar</p>
+          <h2 className="mt-4 text-4xl md:text-6xl font-display">Sanatçılar Ne Diyor</h2>
         </motion.div>
 
-        <div className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide">
+        <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
@@ -51,15 +49,17 @@ export function Testimonials() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex-shrink-0 w-[300px] md:w-[350px] glass-card rounded-2xl p-6 snap-center"
+              className="flex-shrink-0 w-[300px] md:w-[340px] glass-card rounded-sm p-6 snap-center"
             >
-              <Quote className="h-8 w-8 text-primary/40 mb-4" strokeWidth={1} />
-              <p className="text-foreground/90 font-light text-sm leading-relaxed mb-6">
+              <Quote className="h-7 w-7 text-accent/50 mb-4" strokeWidth={1} />
+              <p className="text-foreground/90 text-sm leading-relaxed mb-6">
                 &quot;{testimonial.quote}&quot;
               </p>
               <div>
-                <div className="font-light">{testimonial.name}</div>
-                <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                <div className="font-display text-lg tracking-wide">{testimonial.name}</div>
+                <div className="text-xs uppercase tracking-[0.15em] text-muted-foreground mt-1">
+                  {testimonial.role}
+                </div>
               </div>
             </motion.div>
           ))}

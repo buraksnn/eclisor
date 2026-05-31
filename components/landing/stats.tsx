@@ -7,13 +7,14 @@ type StatItem = {
   value: number
   suffix: string
   label: string
+  isText?: boolean
 }
 
-function AnimatedCounter({ value, suffix, label, inView }: StatItem & { inView: boolean }) {
+function AnimatedCounter({ value, suffix, label, inView, isText }: StatItem & { inView: boolean }) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    if (!inView) return
+    if (!inView || isText) return
 
     const duration = 2000
     const steps = 60
@@ -31,14 +32,14 @@ function AnimatedCounter({ value, suffix, label, inView }: StatItem & { inView: 
     }, duration / steps)
 
     return () => clearInterval(timer)
-  }, [inView, value])
+  }, [inView, value, isText])
+
+  const display = isText ? `${value}${suffix}` : `${count.toLocaleString()}${suffix}`
 
   return (
     <div className="text-center">
-      <div className="text-4xl md:text-5xl font-extralight tracking-tight text-foreground">
-        {count.toLocaleString()}{suffix}
-      </div>
-      <div className="mt-2 text-sm text-muted-foreground font-light">{label}</div>
+      <div className="font-display text-5xl md:text-6xl tracking-wide text-foreground">{display}</div>
+      <div className="mt-2 text-xs uppercase tracking-[0.25em] text-muted-foreground">{label}</div>
     </div>
   )
 }
@@ -53,14 +54,17 @@ export function Stats({ artistCount, countryCount, streamCount }: StatsProps) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
+  const streamNum = parseInt(streamCount.replace(/[^0-9]/g, '')) || 2
+  const streamSuffix = streamCount.replace(/[0-9]/g, '') || 'M+'
+
   const stats: StatItem[] = [
     { value: artistCount, suffix: '+', label: 'Sanatçı' },
     { value: countryCount, suffix: '+', label: 'Ülke' },
-    { value: parseInt(streamCount.replace(/[^0-9]/g, '')) || 10, suffix: 'M+', label: 'Dinlenme' },
+    { value: streamNum, suffix: streamSuffix, label: 'Dinlenme', isText: true },
   ]
 
   return (
-    <section ref={ref} className="py-32 px-6 border-y border-border/30">
+    <section ref={ref} className="py-28 px-6 border-y border-border">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}

@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 
 const plans = [
   {
@@ -28,18 +26,11 @@ const plans = [
     priceYearly: '$490',
     description: 'Birden fazla sanatçı yöneten label ekipleri için.',
     royaltySplit: 90,
-    features: ['Çoklu sanatçı panelleri', 'Gelişmiş raporlama', 'Özel sözleşmeler', 'Özel temsilci'],
+    features: ['Çoklu sanatçı yönetimi', 'Gelişmiş raporlama', 'Özel sözleşmeler', 'Özel temsilci'],
   },
 ]
 
-type ComparisonRow = {
-  feature: string
-  starterPlan: string
-  proPlan: string
-  labelPlan: string
-}
-
-const comparison: ComparisonRow[] = [
+const comparison = [
   { feature: "Mağazalar & DSP'ler", starterPlan: '200+', proPlan: '250+', labelPlan: '300+' },
   { feature: 'Royalty Paylaşımı', starterPlan: 'Sanatçıya %80', proPlan: 'Sanatçıya %85', labelPlan: 'Sanatçıya %90' },
   { feature: 'YouTube Content ID', starterPlan: '—', proPlan: 'Dahil', labelPlan: 'Dahil' },
@@ -47,123 +38,93 @@ const comparison: ComparisonRow[] = [
   { feature: 'Label Paketi', starterPlan: '—', proPlan: '—', labelPlan: 'Var' },
 ]
 
-function BillingDetails() {
-  return (
-    <div className="mt-14 grid gap-6 md:grid-cols-2">
-      <div className="border border-border/80 rounded-xl p-6 bg-card">
-        <h2 className="text-lg font-semibold">Faturalama takvimi</h2>
-        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-          <li>Aylık veya yıllık faturalama. Planlar her dönemde aynı takvim gününde yenilenir.</li>
-          <li>Faturalar otomatik oluşturulur ve e-posta adresinize gönderilir.</li>
-          <li>Panelinizden aylık ve yıllık ödeme arasında geçiş yapabilirsiniz.</li>
-        </ul>
-      </div>
-      <div className="border border-border/80 rounded-xl p-6 bg-card">
-        <h2 className="text-lg font-semibold">Komisyon ve ödemeler</h2>
-        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-          <li>Royalty payı sanatçıya ödenir: %80 (Başlangıç), %85 (Pro), %90 (Label).</li>
-          <li>Eclisor kalan komisyonu dağıtım, raporlama ve destek hizmetleri için alır.</li>
-          <li>Ödemeler DSP raporları kesinleştikten sonra aylık olarak yapılır.</li>
-        </ul>
-      </div>
-    </div>
-  )
-}
-
 export default function PricingPage() {
   return (
     <main className="bg-background text-foreground">
       <Navbar />
-      <section className="pt-28 pb-20 px-6">
+      <section className="pt-36 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="uppercase tracking-[0.2em] text-[0.6rem]">
-              Fiyatlandırma
-            </Badge>
-            <h1 className="mt-6 text-4xl md:text-6xl font-semibold">
-              Her yayın için şeffaf planlar.
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Aylık ve yıllık ödeme arasında geçiş yaparak kataloğunuz için en iyi değeri yakalayın.
+            <p className="section-tag">Fiyatlandırma</p>
+            <h1 className="mt-4 text-5xl md:text-7xl font-display">Şeffaf Planlar</h1>
+            <p className="mt-6 text-muted-foreground leading-relaxed">
+              Aylık veya yıllık faturalama seçenekleriyle kataloğun için en uygun planı inceleyebilirsin.
+              Detaylı bilgi ve başvuru için{' '}
+              <Link href="/contact" className="text-accent hover:underline">
+                iletişim
+              </Link>{' '}
+              sayfamıza göz at.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href="/register">Dağıtıma başla</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/contact">Bizimle konuş</Link>
-              </Button>
-            </div>
           </div>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-14 grid gap-4 lg:grid-cols-3">
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`border border-border/80 rounded-xl p-8 flex flex-col gap-6 ${
-                  plan.highlighted ? 'bg-foreground text-background' : 'bg-card'
+                className={`rounded-sm p-8 flex flex-col gap-6 border ${
+                  plan.highlighted
+                    ? 'border-accent/40 bg-accent/5'
+                    : 'border-border glass-card'
                 }`}
               >
                 <div>
-                  {plan.highlighted ? (
-                    <Badge className="bg-background text-foreground">En Popüler</Badge>
-                  ) : (
-                    <Badge variant="outline">Temel Plan</Badge>
+                  {plan.highlighted && (
+                    <span className="text-[0.65rem] uppercase tracking-[0.3em] text-accent">
+                      En popüler
+                    </span>
                   )}
-                  <h3 className="mt-4 text-2xl font-semibold">{plan.name}</h3>
-                  <p className={`mt-2 text-sm ${plan.highlighted ? 'text-background/80' : 'text-muted-foreground'}`}>
-                    {plan.description}
-                  </p>
+                  <h3 className="mt-2 font-display text-3xl tracking-wide">{plan.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
                 </div>
                 <div>
-                  <div className="flex items-end gap-3">
-                    <span className="text-4xl font-semibold">{plan.priceMonthly}</span>
-                    <span className={`text-sm ${plan.highlighted ? 'text-background/80' : 'text-muted-foreground'}`}>
-                      /ay
-                    </span>
+                  <div className="flex items-end gap-2">
+                    <span className="font-display text-5xl">{plan.priceMonthly}</span>
+                    <span className="text-sm text-muted-foreground pb-1">/ ay</span>
                   </div>
-                  <p className={`text-xs mt-2 ${plan.highlighted ? 'text-background/70' : 'text-muted-foreground'}`}>
-                    veya yıllık {plan.priceYearly} olarak.
-                  </p>
+                  <p className="text-xs mt-2 text-muted-foreground">veya yıllık {plan.priceYearly}</p>
                 </div>
-                <ul className={`space-y-2 text-sm ${plan.highlighted ? 'text-background/90' : 'text-foreground'}`}>
-                  <li className="flex items-center gap-2">
-                    <span className={`h-1.5 w-1.5 rounded-full ${plan.highlighted ? 'bg-background' : 'bg-foreground'}`} />
-                    Royalty paylaşımı: sanatçıya %{plan.royaltySplit}
-                  </li>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>Royalty: sanatçıya %{plan.royaltySplit}</li>
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
-                      <span className={`h-1.5 w-1.5 rounded-full ${plan.highlighted ? 'bg-background' : 'bg-foreground'}`} />
+                      <span className="h-1 w-1 rounded-full bg-accent shrink-0" />
                       {feature}
                     </li>
                   ))}
                 </ul>
-                <Button
-                  asChild
-                  size="lg"
-                  variant={plan.highlighted ? 'secondary' : 'default'}
-                  className={plan.highlighted ? 'bg-background text-foreground hover:bg-background/90' : ''}
-                >
-                  <Link href="/register">{plan.name} seç</Link>
-                </Button>
               </div>
             ))}
           </div>
 
-          <BillingDetails />
+          <div className="mt-14 grid gap-4 md:grid-cols-2">
+            <div className="glass-card rounded-sm p-6">
+              <h2 className="font-display text-xl tracking-wide">Faturalama</h2>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground leading-relaxed">
+                <li>Aylık veya yıllık faturalama; planlar her dönemde aynı takvim gününde yenilenir.</li>
+                <li>Faturalar otomatik oluşturulur ve kayıtlı e-posta adresine gönderilir.</li>
+              </ul>
+            </div>
+            <div className="glass-card rounded-sm p-6">
+              <h2 className="font-display text-xl tracking-wide">Komisyon ve ödemeler</h2>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground leading-relaxed">
+                <li>Royalty payı: %80 (Başlangıç), %85 (Pro), %90 (Label).</li>
+                <li>Ödemeler DSP raporları kesinleştikten sonra aylık olarak yapılır.</li>
+              </ul>
+            </div>
+          </div>
 
-          <div className="mt-16 border border-border/80 rounded-xl overflow-hidden">
+          <div className="mt-14 border border-border rounded-sm overflow-hidden">
             <div className="grid grid-cols-4 gap-0 text-sm">
-              <div className="p-4 font-semibold uppercase tracking-[0.2em] text-[0.6rem]">Özellikler</div>
-              <div className="p-4 font-semibold uppercase tracking-[0.2em] text-[0.6rem]">Başlangıç</div>
-              <div className="p-4 font-semibold uppercase tracking-[0.2em] text-[0.6rem]">Pro</div>
-              <div className="p-4 font-semibold uppercase tracking-[0.2em] text-[0.6rem]">Label</div>
+              <div className="p-4 font-display text-xs tracking-[0.2em] uppercase bg-muted/30">Özellik</div>
+              <div className="p-4 font-display text-xs tracking-[0.2em] uppercase bg-muted/30">Başlangıç</div>
+              <div className="p-4 font-display text-xs tracking-[0.2em] uppercase bg-muted/30">Pro</div>
+              <div className="p-4 font-display text-xs tracking-[0.2em] uppercase bg-muted/30">Label</div>
               {comparison.map((row) => (
                 <div key={row.feature} className="contents">
-                  <div className="p-4 border-t border-border/80 text-muted-foreground">{row.feature}</div>
-                  <div className="p-4 border-t border-border/80">{row.starterPlan}</div>
-                  <div className="p-4 border-t border-border/80">{row.proPlan}</div>
-                  <div className="p-4 border-t border-border/80">{row.labelPlan}</div>
+                  <div className="p-4 border-t border-border text-muted-foreground">{row.feature}</div>
+                  <div className="p-4 border-t border-border">{row.starterPlan}</div>
+                  <div className="p-4 border-t border-border">{row.proPlan}</div>
+                  <div className="p-4 border-t border-border">{row.labelPlan}</div>
                 </div>
               ))}
             </div>
