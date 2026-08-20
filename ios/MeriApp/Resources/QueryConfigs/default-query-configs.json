@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": "catalog-products",
+      "title": "Ürünler",
+      "tableName": "products",
+      "selectColumns": ["id", "name", "category", "updated_at"],
+      "baseFilter": "is_deleted = 0",
+      "sortColumns": [
+        { "name": "id", "direction": "ASC" }
+      ],
+      "pageSize": 100,
+      "searchableColumns": ["name", "category"]
+    },
+    {
+      "id": "catalog-customers",
+      "title": "Müşteriler",
+      "tableName": "customers",
+      "selectColumns": ["id", "full_name", "city", "updated_at"],
+      "baseFilter": null,
+      "sortColumns": [
+        { "name": "id", "direction": "ASC" }
+      ],
+      "pageSize": 100,
+      "searchableColumns": ["full_name", "city"]
+    }
+  ]
+}
